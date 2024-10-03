@@ -1293,7 +1293,7 @@ dtb-$(CONFIG_SOC_K3_AM625) += k3-am625-sk.dtb \
 
 dtb-$(CONFIG_SOC_K3_AM625) += k3-am625-var-som-symphony.dtb \
 			      k3-am625-var-som-symphony-r5.dtb \
-				  k3-am625-var-som-slice-luxomed.dtb
+			      k3-am625-var-som-slice-luxomed.dtb
 
 
 dtb-$(CONFIG_SOC_K3_AM62A7) += k3-am62a7-sk.dtb \
