@@ -53,8 +53,8 @@
 };
 
 &binman {
-	tiboot3-am62x-hs-fs-am62x-var-som.bin {
-		filename = "tiboot3-am62x-hs-fs-am62x-var-som.bin";
+	tiboot3-am62x-hs-fs-am62x-var-som-slice-luxomed.bin {
+		filename = "tiboot3-am62x-hs-fs-am62x-var-som-slice-luxomed.bin";
 		symlink = "tiboot3.bin";
 		ti-secure-rom {
 			content = <&u_boot_spl_fs>, <&ti_fs_enc_fs>, <&combined_tifs_cfg_fs>,
