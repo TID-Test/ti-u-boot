@@ -326,15 +326,15 @@
 				};
 
 				fdt-0 {
-					description = "k3-am625-var-som-slice-luxomed";
+					description = "k3-am625-var-som";
 					type = "flat_dt";
 					arch = "arm";
 					compression = "none";
 					ti-secure {
-						content = <&spl_am625_var-som-slice-luxomed_dtb>;
+						content = <&spl_am625_var_som_dtb>;
 						keyfile = "custMpk.pem";
 					};
-					spl_am625_var-som-slice-luxomed_dtb: blob-ext {
+					spl_am625_var_som_dtb: blob-ext {
 						filename = SPL_AM625_VAR_SOM_DTB;
 					};
 
@@ -346,7 +346,7 @@
 				default = "conf-0";
 
 				conf-0 {
-					description = "k3-am625-var-som-slice-luxomed";
+					description = "k3-am625-var-som";
 					firmware = "atf";
 					loadables = "tee", "fsstub-hs", "fsstub-fs",
 						  "fsstub-gp", "dm", "spl";
@@ -385,15 +385,15 @@
 				};
 
 				fdt-0 {
-					description = "k3-am625-var-som-slice-luxomed";
+					description = "k3-am625-var-som";
 					type = "flat_dt";
 					arch = "arm";
 					compression = "none";
 					ti-secure {
-						content = <&am625_var-som-slice-luxomed_dtb>;
+						content = <&am625_var_som_dtb>;
 						keyfile = "custMpk.pem";
 					};
-					am625_var-som-slice-luxomed_dtb: blob-ext {
+					am625_var_som_dtb: blob-ext {
 						filename = AM625_VAR_SOM_DTB;
 					};
 					hash {
@@ -406,7 +406,7 @@
 				default = "conf-0";
 
 				conf-0 {
-					description = "k3-am625-var-som-slice-luxomed";
+					description = "k3-am625-var-som";
 					firmware = "uboot";
 					loadables = "uboot";
 					fdt = "fdt-0";
@@ -520,11 +520,11 @@
 				};
 
 				fdt-0 {
-					description = "k3-am625-var-som-slice-luxomed";
+					description = "k3-am625-var-som";
 					type = "flat_dt";
 					arch = "arm";
 					compression = "none";
-					spl_am625_var-som-slice-luxomed_dtb_unsigned: blob {
+					spl_am625_var_som_dtb_unsigned: blob {
 						filename = SPL_AM625_VAR_SOM_DTB;
 					};
 				};
@@ -534,7 +534,7 @@
 				default = "conf-0";
 
 				conf-0 {
-					description = "k3-am625-var-som-slice-luxomed";
+					description = "k3-am625-var-som";
 					firmware = "atf";
 					loadables = "tee", "fsstub-hs", "fsstub-fs",
 						  "fsstub-gp", "dm", "spl";
@@ -570,11 +570,11 @@
 				};
 
 				fdt-0 {
-					description = "k3-am625-var-som-slice-luxomed";
+					description = "k3-am625-var-som";
 					type = "flat_dt";
 					arch = "arm";
 					compression = "none";
-					am625_var-som-slice-luxomed_dtb_unsigned: blob {
+					am625_var_som_dtb_unsigned: blob {
 						filename = AM625_VAR_SOM_DTB;
 					};
 					hash {
@@ -587,7 +587,7 @@
 				default = "conf-0";
 
 				conf-0 {
-					description = "k3-am625-var-som-slice-luxomed";
+					description = "k3-am625-var-som";
 					firmware = "uboot";
 					loadables = "uboot";
 					fdt = "fdt-0";
