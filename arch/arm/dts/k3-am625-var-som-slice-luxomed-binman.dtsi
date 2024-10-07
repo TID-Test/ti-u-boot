@@ -8,8 +8,8 @@
 #ifdef CONFIG_TARGET_AM62X_VAR_SOM_R5
 
 &binman {
-	tiboot3-am62x-hs-am62x-var-som.bin {
-		filename = "tiboot3-am62x-hs-am62x-var-som.bin";
+	tiboot3-am62x-hs-am62x-var-som-slice-luxomed.bin {
+		filename = "tiboot3-am62x-hs-am62x-var-som-slice-luxomed.bin";
 		ti-secure-rom {
 			content = <&u_boot_spl>, <&ti_fs_enc>, <&combined_tifs_cfg>,
 				<&combined_dm_cfg>, <&sysfw_inner_cert>;
@@ -99,8 +99,8 @@
 };
 
 &binman {
-	tiboot3-am62x-gp-am62x-var-som.bin {
-		filename = "tiboot3-am62x-gp-am62x-var-som.bin";
+	tiboot3-am62x-gp-am62x-var-som-slice-luxomed.bin {
+		filename = "tiboot3-am62x-gp-am62x-var-som-slice-luxomed.bin";
 		ti-secure-rom {
 			content = <&u_boot_spl_unsigned>, <&ti_fs_gp>,
 				<&combined_tifs_cfg_gp>, <&combined_dm_cfg_gp>;
