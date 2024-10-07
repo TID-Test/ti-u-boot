@@ -326,7 +326,7 @@
 				};
 
 				fdt-0 {
-					description = "k3-am625-var-som";
+					description = "k3-am625-var-som-slice-luxomed";
 					type = "flat_dt";
 					arch = "arm";
 					compression = "none";
@@ -346,7 +346,7 @@
 				default = "conf-0";
 
 				conf-0 {
-					description = "k3-am625-var-som";
+					description = "k3-am625-var-som-slice-luxomed";
 					firmware = "atf";
 					loadables = "tee", "fsstub-hs", "fsstub-fs",
 						  "fsstub-gp", "dm", "spl";
@@ -385,7 +385,7 @@
 				};
 
 				fdt-0 {
-					description = "k3-am625-var-som";
+					description = "k3-am625-var-som-slice-luxomed";
 					type = "flat_dt";
 					arch = "arm";
 					compression = "none";
@@ -406,7 +406,7 @@
 				default = "conf-0";
 
 				conf-0 {
-					description = "k3-am625-var-som";
+					description = "k3-am625-var-som-slice-luxomed";
 					firmware = "uboot";
 					loadables = "uboot";
 					fdt = "fdt-0";
@@ -520,7 +520,7 @@
 				};
 
 				fdt-0 {
-					description = "k3-am625-var-som";
+					description = "k3-am625-var-som-slice-luxomed";
 					type = "flat_dt";
 					arch = "arm";
 					compression = "none";
@@ -534,7 +534,7 @@
 				default = "conf-0";
 
 				conf-0 {
-					description = "k3-am625-var-som";
+					description = "k3-am625-var-som-slice-luxomed";
 					firmware = "atf";
 					loadables = "tee", "fsstub-hs", "fsstub-fs",
 						  "fsstub-gp", "dm", "spl";
@@ -570,7 +570,7 @@
 				};
 
 				fdt-0 {
-					description = "k3-am625-var-som";
+					description = "k3-am625-var-som-slice-luxomed";
 					type = "flat_dt";
 					arch = "arm";
 					compression = "none";
@@ -587,7 +587,7 @@
 				default = "conf-0";
 
 				conf-0 {
-					description = "k3-am625-var-som";
+					description = "k3-am625-var-som-slice-luxomed";
 					firmware = "uboot";
 					loadables = "uboot";
 					fdt = "fdt-0";
