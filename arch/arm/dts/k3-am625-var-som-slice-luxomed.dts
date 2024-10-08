@@ -81,19 +81,13 @@
 	};
 };
 
-&cpsw3g_mdio {
-	cpsw3g_phy1: ethernet-phy@5 {
-		reg = <5>;
-	};
+&cpsw3g {
+	pinctrl-names = "default";
+	pinctrl-0 = <&main_rgmii1_pins_default>;
 };
 
 &cpsw_port2 {
-	status = "okay";
-	phy-mode = "rgmii";
-	phy-handle = <&cpsw3g_phy1>;
-	phy-reset-gpios = <&pca9534 5 GPIO_ACTIVE_LOW>;
-	phy-reset-duration = <10>;
-	phy-reset-post-delay = <20>;
+	status = "disabled";
 };
 
 &dss {
@@ -118,40 +112,6 @@
 	pinctrl-names = "default";
 	pinctrl-0 = <&main_i2c0_pins_default>;
 	clock-frequency = <400000>;
-
-	/* GPIO expander */
-	pca9534: gpio@20 {
-		compatible = "nxp,pca9534";
-		reg = <0x20>;
-		gpio-controller;
-		pinctrl-names = "default";
-		interrupt-parent = <&main_gpio1>;
-		interrupts = <30 IRQ_TYPE_EDGE_FALLING>;
-		#gpio-cells = <2>;
-		wakeup-source;
-		status = "okay";
-
-		usb3_sel_hog {
-			gpio-hog;
-			gpios = <4 GPIO_ACTIVE_HIGH>;
-			output-low;
-			line-name = "usb3_sel";
-		};
-
-		eth_som_vselect_hog {
-			gpio-hog;
-			gpios = <6 GPIO_ACTIVE_HIGH>;
-			output-low;
-			line-name = "eth-vselect";
-		};
-
-		eth_mdio_enable_hog {
-			gpio-hog;
-			gpios = <7 GPIO_ACTIVE_HIGH>;
-			output-high;
-			line-name = "eth-mdio-enable";
-		};
-	};
 };
 
 &main_i2c1 {
