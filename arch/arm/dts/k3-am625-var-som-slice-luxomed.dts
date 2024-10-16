@@ -131,7 +131,7 @@
 &main_pmx0 {
 	lcd_backlight_pins_default: lcd-backlight-pins-default {
 		pinctrl-single,pins = <
-			AM62X_IOPAD(0x19c, PIN_OUTPUT, 7) /* (B18) GPIO_1_9 */
+			AM62X_IOPAD(0x19c, PIN_INPUT_PULLUP, 0) /* (B18) GPIO_1_9 */
 		>;
 	};
 
