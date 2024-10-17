@@ -12,15 +12,19 @@
 #include <dsi_host.h>
 
 int dsi_host_init(struct udevice *dev,
-		  struct mipi_dsi_device *device,
-		  struct display_timing *timings,
-		  unsigned int max_data_lanes,
-		  const struct mipi_dsi_phy_ops *phy_ops)
+				  struct mipi_dsi_device *device,
+				  struct display_timing *timings,
+				  unsigned int max_data_lanes,
+				  const struct mipi_dsi_phy_ops *phy_ops)
 {
 	struct dsi_host_ops *ops = dsi_host_get_ops(dev);
 
+	printf("display-uclass: dsi_host_init\n");
+
 	if (!ops->init)
 		return -ENOSYS;
+
+	printf("display-uclass: dsi_host_init OK\n");
 
 	return ops->init(dev, device, timings, max_data_lanes, phy_ops);
 }
@@ -29,13 +33,17 @@ int dsi_host_enable(struct udevice *dev)
 {
 	struct dsi_host_ops *ops = dsi_host_get_ops(dev);
 
+	printf("display-uclass: dsi_host_enable\n");
+
 	if (!ops->enable)
 		return -ENOSYS;
+
+	printf("display-uclass: dsi_host_enable OK\n");
 
 	return ops->enable(dev);
 }
 
 UCLASS_DRIVER(dsi_host) = {
-	.id		= UCLASS_DSI_HOST,
-	.name		= "dsi_host",
+	.id = UCLASS_DSI_HOST,
+	.name = "dsi_host",
 };
