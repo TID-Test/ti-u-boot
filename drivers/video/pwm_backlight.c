@@ -36,7 +36,8 @@
  * @max_level: Maximum level of the backlight (full on)
  * @enabled: true if backlight is enabled
  */
-struct pwm_backlight_priv {
+struct pwm_backlight_priv
+{
 	struct udevice *reg;
 	struct gpio_desc enable;
 	struct udevice *pwm;
@@ -62,16 +63,19 @@ static int set_pwm(struct pwm_backlight_priv *priv)
 	uint duty_cycle;
 	int ret;
 
-	if (priv->period_ns) {
+	if (priv->period_ns)
+	{
 		duty_cycle = priv->period_ns * (priv->cur_level - priv->min_level) /
-			(priv->max_level - priv->min_level);
+					 (priv->max_level - priv->min_level);
 		ret = pwm_set_config(priv->pwm, priv->channel, priv->period_ns,
-				     duty_cycle);
-	} else {
+							 duty_cycle);
+	}
+	else
+	{
 		/* PWM driver will internally scale these like the above. */
 		ret = pwm_set_config(priv->pwm, priv->channel,
-				     priv->max_level - priv->min_level,
-				     priv->cur_level - priv->min_level);
+							 priv->max_level - priv->min_level,
+							 priv->cur_level - priv->min_level);
 	}
 	if (ret)
 		return log_ret(ret);
@@ -88,19 +92,22 @@ static int enable_sequence(struct udevice *dev, int seq)
 	struct pwm_backlight_priv *priv = dev_get_priv(dev);
 	int ret;
 
-	switch (seq) {
+	switch (seq)
+	{
 	case 0:
-		if (priv->reg) {
+		if (priv->reg)
+		{
 			__maybe_unused struct dm_regulator_uclass_plat
 				*plat;
 
 			plat = dev_get_uclass_plat(priv->reg);
-			log_debug("Enable '%s', regulator '%s'/'%s'\n",
-				  dev->name, priv->reg->name, plat->name);
+			printf("Enable '%s', regulator '%s'/'%s'\n",
+				   dev->name, priv->reg->name, plat->name);
 			ret = regulator_set_enable(priv->reg, true);
-			if (ret) {
-				log_debug("Cannot enable regulator for PWM '%s'\n",
-					  dev->name);
+			if (ret)
+			{
+				printf("Cannot enable regulator for PWM '%s'\n",
+					   dev->name);
 				return log_ret(ret);
 			}
 			mdelay(120);
@@ -144,25 +151,32 @@ static int pwm_backlight_set_brightness(struct udevice *dev, int percent)
 	int level;
 	int ret;
 
-	if (!priv->enabled) {
+	if (!priv->enabled)
+	{
 		ret = enable_sequence(dev, 0);
 		if (ret)
 			return log_ret(ret);
 	}
-	if (percent == BACKLIGHT_OFF) {
+	if (percent == BACKLIGHT_OFF)
+	{
 		disable = true;
 		percent = 0;
 	}
-	if (percent == BACKLIGHT_DEFAULT) {
+	if (percent == BACKLIGHT_DEFAULT)
+	{
 		level = priv->default_level;
-	} else {
-		if (priv->levels) {
-			level = priv->levels[percent * (priv->num_levels - 1)
-				/ 100];
-		} else {
+	}
+	else
+	{
+		if (priv->levels)
+		{
+			level = priv->levels[percent * (priv->num_levels - 1) / 100];
+		}
+		else
+		{
 			level = priv->min_level +
-				(priv->max_level - priv->min_level) *
-				percent / 100;
+					(priv->max_level - priv->min_level) *
+						percent / 100;
 		}
 	}
 	priv->cur_level = level;
@@ -170,15 +184,18 @@ static int pwm_backlight_set_brightness(struct udevice *dev, int percent)
 	ret = set_pwm(priv);
 	if (ret)
 		return log_ret(ret);
-	if (!priv->enabled) {
+	if (!priv->enabled)
+	{
 		ret = enable_sequence(dev, 1);
 		if (ret)
 			return log_ret(ret);
 		priv->enabled = true;
 	}
-	if (disable) {
+	if (disable)
+	{
 		dm_gpio_set_value(&priv->enable, 0);
-		if (priv->reg) {
+		if (priv->reg)
+		{
 			ret = regulator_set_enable(priv->reg, false);
 			if (ret)
 				return log_ret(ret);
@@ -196,28 +213,31 @@ static int pwm_backlight_of_to_plat(struct udevice *dev)
 	int index, ret, count, len;
 	const u32 *cell;
 
-	log_debug("start\n");
+	printf("start\n");
 	ret = uclass_get_device_by_phandle(UCLASS_REGULATOR, dev,
-					   "power-supply", &priv->reg);
+									   "power-supply", &priv->reg);
 	if (ret)
-		log_debug("Cannot get power supply: ret=%d\n", ret);
+		printf("Cannot get power supply: ret=%d\n", ret);
 	ret = gpio_request_by_name(dev, "enable-gpios", 0, &priv->enable,
-				   GPIOD_IS_OUT);
-	if (ret) {
-		log_debug("Warning: cannot get enable GPIO: ret=%d\n", ret);
+							   GPIOD_IS_OUT);
+	if (ret)
+	{
+		printf("Warning: cannot get enable GPIO: ret=%d\n", ret);
 		if (ret != -ENOENT)
 			return log_ret(ret);
 	}
 	ret = dev_read_phandle_with_args(dev, "pwms", "#pwm-cells", 0, 0,
-					 &args);
-	if (ret) {
-		log_debug("Cannot get PWM phandle: ret=%d\n", ret);
+									 &args);
+	if (ret)
+	{
+		printf("Cannot get PWM phandle: ret=%d\n", ret);
 		return log_ret(ret);
 	}
 
 	ret = uclass_get_device_by_ofnode(UCLASS_PWM, args.node, &priv->pwm);
-	if (ret) {
-		log_debug("Cannot get PWM: ret=%d\n", ret);
+	if (ret)
+	{
+		printf("Cannot get PWM: ret=%d\n", ret);
 		return log_ret(ret);
 	}
 	if (args.args_count < 1)
@@ -231,24 +251,26 @@ static int pwm_backlight_of_to_plat(struct udevice *dev)
 	index = dev_read_u32_default(dev, "default-brightness-level", 255);
 	cell = dev_read_prop(dev, "brightness-levels", &len);
 	count = len / sizeof(u32);
-	if (cell && count > index) {
+	if (cell && count > index)
+	{
 		priv->levels = malloc(len);
 		if (!priv->levels)
 			return log_ret(-ENOMEM);
 		ret = dev_read_u32_array(dev, "brightness-levels", priv->levels,
-					 count);
+								 count);
 		if (ret)
 			return log_msg_ret("levels", ret);
 		priv->num_levels = count;
 		priv->default_level = priv->levels[index];
 		priv->max_level = priv->levels[count - 1];
-	} else {
+	}
+	else
+	{
 		priv->default_level = index;
 		priv->max_level = 255;
 	}
 	priv->cur_level = priv->default_level;
-	log_debug("done\n");
-
+	printf("done\n");
 
 	return 0;
 }
@@ -259,21 +281,20 @@ static int pwm_backlight_probe(struct udevice *dev)
 }
 
 static const struct backlight_ops pwm_backlight_ops = {
-	.enable		= pwm_backlight_enable,
-	.set_brightness	= pwm_backlight_set_brightness,
+	.enable = pwm_backlight_enable,
+	.set_brightness = pwm_backlight_set_brightness,
 };
 
 static const struct udevice_id pwm_backlight_ids[] = {
-	{ .compatible = "pwm-backlight" },
-	{ }
-};
+	{.compatible = "pwm-backlight"},
+	{}};
 
 U_BOOT_DRIVER(pwm_backlight) = {
-	.name	= "pwm_backlight",
-	.id	= UCLASS_PANEL_BACKLIGHT,
+	.name = "pwm_backlight",
+	.id = UCLASS_PANEL_BACKLIGHT,
 	.of_match = pwm_backlight_ids,
-	.ops	= &pwm_backlight_ops,
-	.of_to_plat	= pwm_backlight_of_to_plat,
-	.probe		= pwm_backlight_probe,
-	.priv_auto	= sizeof(struct pwm_backlight_priv),
+	.ops = &pwm_backlight_ops,
+	.of_to_plat = pwm_backlight_of_to_plat,
+	.probe = pwm_backlight_probe,
+	.priv_auto = sizeof(struct pwm_backlight_priv),
 };
