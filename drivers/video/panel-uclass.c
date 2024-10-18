@@ -52,7 +52,9 @@ int panel_get_display_timing(struct udevice *dev, struct display_timing *timings
 
 	printf("panel-uclass: ops->get_display_timing: %d\n", ops->get_display_timing);
 
-	if (!ops->get_display_timing)
+	// if (!ops->get_display_timing)
+	// 	return -ENOSYS;
+	if (ops->get_display_timing != 0)
 		return -ENOSYS;
 
 	printf("panel-uclass: ops->get_display_timing(dev, timings): %d\n", ops->get_display_timing(dev, timings));
