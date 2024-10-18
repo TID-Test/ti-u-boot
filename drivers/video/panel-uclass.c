@@ -19,6 +19,8 @@ int panel_enable_backlight(struct udevice *dev)
 	if (!ops->enable_backlight)
 		return -ENOSYS;
 
+	printf("panel-uclass: ops->enable_backlight: %d\n", ops->enable_backlight(dev));
+
 	return ops->enable_backlight(dev);
 }
 
@@ -39,11 +41,12 @@ int panel_set_backlight(struct udevice *dev, int percent)
 	if (!ops->set_backlight)
 		return -ENOSYS;
 
+	printf("panel-uclass: ops->set_backlight(dev, percent): %d\n", ops->set_backlight(dev, percent));
+
 	return ops->set_backlight(dev, percent);
 }
 
-int panel_get_display_timing(struct udevice *dev,
-							 struct display_timing *timings)
+int panel_get_display_timing(struct udevice *dev, struct display_timing *timings)
 {
 	struct panel_ops *ops = panel_get_ops(dev);
 
@@ -51,6 +54,8 @@ int panel_get_display_timing(struct udevice *dev,
 
 	if (!ops->get_display_timing)
 		return -ENOSYS;
+
+	printf("panel-uclass: ops->get_display_timing(dev, timings): %d\n", ops->get_display_timing(dev, timings));
 
 	return ops->get_display_timing(dev, timings);
 }
