@@ -27,9 +27,10 @@
 		bootargs = "console=ttyS2,115200n8 earlycon=ns16550a,mmio32,0x02800000";
 	};
 
+	//USB C pin:J1.72-USB3_INTB
 	extcon_usb0: extcon-usb0 {
 		compatible = "linux,extcon-usb-gpio";
-		id-gpios = <&main_gpio1 12 GPIO_ACTIVE_HIGH>;
+		id-gpios = <&main_gpio1 12 GPIO_ACTIVE_HIGH>;//GPIO For usb ID
 		pinctrl-names = "default";
 		pinctrl-0 = <&extcon_usb0_gpio_id_pins_default>;
 	};
@@ -75,17 +76,22 @@
 		gpio = <&main_gpio0 30 GPIO_ACTIVE_HIGH>;
 	};
 
+	//used to change sd voltage from 3.3V to 1.8V
 	vdd_sd_dv: gpio-regulator-4 {
 		compatible = "regulator-gpio";
 		regulator-name = "SD_voltage_sel";
 		pinctrl-names = "default";
-		pinctrl-0 = <&vdd_sd_dv_pins_default>;
+		pinctrl-0 = <&vdd_sd_dv_pins_default>; //Array of one or more GPIO pins used to select the regulator voltage/current listed in "states"
 		regulator-min-microvolt = <1800000>;
 		regulator-max-microvolt = <3300000>;
 		regulator-boot-on;
 		gpios = <&main_gpio0 56 GPIO_ACTIVE_HIGH>;
 		states = <1800000 0x0>,
 			 <3300000 0x1>;
+		//states: Selection of available voltages/currents provided by
+		//this regulator and matching GPIO configurations to
+		//achieve them. If there are no states in the "states"
+		//array, use a fixed regulator instead
 	};
 };
 
@@ -255,12 +261,12 @@
 /* SD card */
 &sdhci1 {
 	status = "okay";
-	vmmc-supply = <&vdd_mmc1>;
-	vqmmc-supply = <&vdd_sd_dv>;
+	vmmc-supply = <&vdd_mmc1>;//phandle to the regulator device tree node, mentioned as the VCC/VDD supply in the eMMC/SD specs.
+	vqmmc-supply = <&vdd_sd_dv>;//phandle to the regulator device tree node, mentioned as the VCCQ/VDD_IO supply in the eMMC/SD specs
 	pinctrl-names = "default";
 	pinctrl-0 = <&main_mmc1_pins_default>;
-	ti,driver-strength-ohm = <50>;
-	disable-wp;
+	ti,driver-strength-ohm = <50>; //driver strength in ohms. Valid values are 33, 40, 50, 66 and 100 ohms.
+	disable-wp; //disable write protect
 };
 
 &usb0 {
