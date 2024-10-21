@@ -17,8 +17,6 @@ static int vesa_video_probe(struct udevice *dev)
 	ulong fbbase;
 	int ret;
 
-	printf("vesa: vesa_video_probe\n");
-
 	ret = vesa_setup_video(dev, NULL);
 	if (ret)
 		return log_ret(ret);
@@ -27,8 +25,6 @@ static int vesa_video_probe(struct udevice *dev)
 	fbbase = IS_ENABLED(CONFIG_VIDEO_COPY) ? plat->copy_base : plat->base;
 	mtrr_add_request(MTRR_TYPE_WRCOMB, fbbase, 256 << 20);
 	mtrr_commit(true);
-
-	printf("vesa: vesa_video_probe OK\n");
 
 	return 0;
 }

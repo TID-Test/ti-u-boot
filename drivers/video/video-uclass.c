@@ -62,14 +62,12 @@ DECLARE_GLOBAL_DATA_PTR;
  *	gd->video_top and works downwards, running out of space when it hits
  *	gd->video_bottom.
  */
-struct video_uc_priv
-{
+struct video_uc_priv {
 	ulong video_ptr;
 };
 
 /** struct vid_rgb - Describes a video colour */
-struct vid_rgb
-{
+struct vid_rgb {
 	u32 r;
 	u32 g;
 	u32 b;
@@ -111,12 +109,11 @@ int video_reserve(ulong *addrp)
 
 	gd->video_top = *addrp;
 	for (uclass_find_first_device(UCLASS_VIDEO, &dev);
-		 dev;
-		 uclass_find_next_device(&dev))
-	{
+	     dev;
+	     uclass_find_next_device(&dev)) {
 		size = alloc_fb(dev, addrp);
 		debug("%s: Reserving %lx bytes at %lx for video device '%s'\n",
-			  __func__, size, *addrp, dev->name);
+		      __func__, size, *addrp, dev->name);
 	}
 
 	/* Allocate space for PCI video devices in case there were not bound */
@@ -126,10 +123,9 @@ int video_reserve(ulong *addrp)
 	gd->video_bottom = *addrp;
 	gd->fb_base = *addrp;
 	debug("Video frame buffers from %lx to %lx\n", gd->video_bottom,
-		  gd->video_top);
+	      gd->video_top);
 
-	if (spl_phase() == PHASE_SPL && CONFIG_IS_ENABLED(BLOBLIST))
-	{
+	if (spl_phase() == PHASE_SPL && CONFIG_IS_ENABLED(BLOBLIST)) {
 		struct video_handoff *ho;
 
 		ho = bloblist_add(BLOBLISTT_U_BOOT_VIDEO, sizeof(*ho), 0);
@@ -148,7 +144,7 @@ int video_reserve_from_bloblist(struct video_handoff *ho)
 	gd->fb_base = ho->fb;
 	gd->video_top = ho->fb + ho->size;
 	debug("Reserving %luk for video using blob at: %08x\n",
-		  ((unsigned long)ho->size) >> 10, (u32)ho->fb);
+	      ((unsigned long)ho->size) >> 10, (u32)ho->fb);
 
 	return 0;
 }
@@ -158,11 +154,9 @@ int video_fill(struct udevice *dev, u32 colour)
 	struct video_priv *priv = dev_get_uclass_priv(dev);
 	int ret;
 
-	switch (priv->bpix)
-	{
+	switch (priv->bpix) {
 	case VIDEO_BPP16:
-		if (CONFIG_IS_ENABLED(VIDEO_BPP16))
-		{
+		if (CONFIG_IS_ENABLED(VIDEO_BPP16)) {
 			u16 *ppix = priv->fb;
 			u16 *end = priv->fb + priv->fb_size;
 
@@ -171,8 +165,7 @@ int video_fill(struct udevice *dev, u32 colour)
 			break;
 		}
 	case VIDEO_BPP32:
-		if (CONFIG_IS_ENABLED(VIDEO_BPP32))
-		{
+		if (CONFIG_IS_ENABLED(VIDEO_BPP32)) {
 			u32 *ppix = priv->fb;
 			u32 *end = priv->fb + priv->fb_size;
 
@@ -204,47 +197,44 @@ int video_clear(struct udevice *dev)
 }
 
 static const struct vid_rgb colours[VID_COLOUR_COUNT] = {
-	{0x00, 0x00, 0x00}, /* black */
-	{0xc0, 0x00, 0x00}, /* red */
-	{0x00, 0xc0, 0x00}, /* green */
-	{0xc0, 0x60, 0x00}, /* brown */
-	{0x00, 0x00, 0xc0}, /* blue */
-	{0xc0, 0x00, 0xc0}, /* magenta */
-	{0x00, 0xc0, 0xc0}, /* cyan */
-	{0xc0, 0xc0, 0xc0}, /* light gray */
-	{0x80, 0x80, 0x80}, /* gray */
-	{0xff, 0x00, 0x00}, /* bright red */
-	{0x00, 0xff, 0x00}, /* bright green */
-	{0xff, 0xff, 0x00}, /* yellow */
-	{0x00, 0x00, 0xff}, /* bright blue */
-	{0xff, 0x00, 0xff}, /* bright magenta */
-	{0x00, 0xff, 0xff}, /* bright cyan */
-	{0xff, 0xff, 0xff}, /* white */
+	{ 0x00, 0x00, 0x00 },  /* black */
+	{ 0xc0, 0x00, 0x00 },  /* red */
+	{ 0x00, 0xc0, 0x00 },  /* green */
+	{ 0xc0, 0x60, 0x00 },  /* brown */
+	{ 0x00, 0x00, 0xc0 },  /* blue */
+	{ 0xc0, 0x00, 0xc0 },  /* magenta */
+	{ 0x00, 0xc0, 0xc0 },  /* cyan */
+	{ 0xc0, 0xc0, 0xc0 },  /* light gray */
+	{ 0x80, 0x80, 0x80 },  /* gray */
+	{ 0xff, 0x00, 0x00 },  /* bright red */
+	{ 0x00, 0xff, 0x00 },  /* bright green */
+	{ 0xff, 0xff, 0x00 },  /* yellow */
+	{ 0x00, 0x00, 0xff },  /* bright blue */
+	{ 0xff, 0x00, 0xff },  /* bright magenta */
+	{ 0x00, 0xff, 0xff },  /* bright cyan */
+	{ 0xff, 0xff, 0xff },  /* white */
 };
 
 u32 video_index_to_colour(struct video_priv *priv, unsigned int idx)
 {
-	switch (priv->bpix)
-	{
+	switch (priv->bpix) {
 	case VIDEO_BPP16:
-		if (CONFIG_IS_ENABLED(VIDEO_BPP16))
-		{
+		if (CONFIG_IS_ENABLED(VIDEO_BPP16)) {
 			return ((colours[idx].r >> 3) << 11) |
-				   ((colours[idx].g >> 2) << 5) |
-				   ((colours[idx].b >> 3) << 0);
+			       ((colours[idx].g >> 2) <<  5) |
+			       ((colours[idx].b >> 3) <<  0);
 		}
 		break;
 	case VIDEO_BPP32:
-		if (CONFIG_IS_ENABLED(VIDEO_BPP32))
-		{
+		if (CONFIG_IS_ENABLED(VIDEO_BPP32)) {
 			if (priv->format == VIDEO_X2R10G10B10)
 				return (colours[idx].r << 22) |
-					   (colours[idx].g << 12) |
-					   (colours[idx].b << 2);
+				       (colours[idx].g << 12) |
+				       (colours[idx].b <<  2);
 			else
 				return (colours[idx].r << 16) |
-					   (colours[idx].g << 8) |
-					   (colours[idx].b << 0);
+				       (colours[idx].g <<  8) |
+				       (colours[idx].b <<  0);
 		}
 		break;
 	default:
@@ -266,19 +256,15 @@ void video_set_default_colors(struct udevice *dev, bool invert)
 	struct video_priv *priv = dev_get_uclass_priv(dev);
 	int fore, back;
 
-	if (CONFIG_IS_ENABLED(SYS_WHITE_ON_BLACK))
-	{
+	if (CONFIG_IS_ENABLED(SYS_WHITE_ON_BLACK)) {
 		/* White is used when switching to bold, use light gray here */
 		fore = VID_LIGHT_GRAY;
 		back = VID_BLACK;
-	}
-	else
-	{
+	} else {
 		fore = VID_BLACK;
 		back = VID_WHITE;
 	}
-	if (invert)
-	{
+	if (invert) {
 		int temp;
 
 		temp = fore;
@@ -297,8 +283,7 @@ int video_sync(struct udevice *vid, bool force)
 	struct video_ops *ops = video_get_ops(vid);
 	int ret;
 
-	if (ops && ops->video_sync)
-	{
+	if (ops && ops->video_sync) {
 		ret = ops->video_sync(vid);
 		if (ret)
 			return ret;
@@ -312,18 +297,16 @@ int video_sync(struct udevice *vid, bool force)
 #if defined(CONFIG_ARM) && !CONFIG_IS_ENABLED(SYS_DCACHE_OFF)
 	struct video_priv *priv = dev_get_uclass_priv(vid);
 
-	if (priv->flush_dcache)
-	{
+	if (priv->flush_dcache) {
 		flush_dcache_range((ulong)priv->fb,
-						   ALIGN((ulong)priv->fb + priv->fb_size,
-								 CONFIG_SYS_CACHELINE_SIZE));
+				   ALIGN((ulong)priv->fb + priv->fb_size,
+					 CONFIG_SYS_CACHELINE_SIZE));
 	}
 #elif defined(CONFIG_VIDEO_SANDBOX_SDL)
 	struct video_priv *priv = dev_get_uclass_priv(vid);
 	static ulong last_sync;
 
-	if (force || get_timer(last_sync) > 100)
-	{
+	if (force || get_timer(last_sync) > 100) {
 		sandbox_sdl_sync(priv->fb);
 		last_sync = get_timer(0);
 	}
@@ -337,11 +320,9 @@ void video_sync_all(void)
 	int ret;
 
 	for (uclass_find_first_device(UCLASS_VIDEO, &dev);
-		 dev;
-		 uclass_find_next_device(&dev))
-	{
-		if (device_active(dev))
-		{
+	     dev;
+	     uclass_find_next_device(&dev)) {
+		if (device_active(dev)) {
 			ret = video_sync(dev, true);
 			if (ret)
 				dev_dbg(dev, "Video sync failed\n");
@@ -354,9 +335,8 @@ bool video_is_active(void)
 	struct udevice *dev;
 
 	for (uclass_find_first_device(UCLASS_VIDEO, &dev);
-		 dev;
-		 uclass_find_next_device(&dev))
-	{
+	     dev;
+	     uclass_find_next_device(&dev)) {
 		if (device_active(dev))
 			return true;
 	}
@@ -383,18 +363,14 @@ int video_sync_copy(struct udevice *dev, void *from, void *to)
 {
 	struct video_priv *priv = dev_get_uclass_priv(dev);
 
-	if (priv->copy_fb)
-	{
+	if (priv->copy_fb) {
 		long offset, size;
 
 		/* Find the offset of the first byte to copy */
-		if ((ulong)to > (ulong)from)
-		{
+		if ((ulong)to > (ulong)from) {
 			size = to - from;
 			offset = from - priv->fb;
-		}
-		else
-		{
+		} else {
 			size = from - to;
 			offset = to - priv->fb;
 		}
@@ -403,14 +379,13 @@ int video_sync_copy(struct udevice *dev, void *from, void *to)
 		 * Allow a bit of leeway for valid requests somewhere near the
 		 * frame buffer
 		 */
-		if (offset < -priv->fb_size || offset > 2 * priv->fb_size)
-		{
+		if (offset < -priv->fb_size || offset > 2 * priv->fb_size) {
 #ifdef DEBUG
 			char str[120];
 
 			snprintf(str, sizeof(str),
-					 "[** FAULT sync_copy fb=%p, from=%p, to=%p, offset=%lx]",
-					 priv->fb, from, to, offset);
+				 "[** FAULT sync_copy fb=%p, from=%p, to=%p, offset=%lx]",
+				 priv->fb, from, to, offset);
 			console_puts_select_stderr(true, str);
 #endif
 			return -EFAULT;
@@ -422,12 +397,9 @@ int video_sync_copy(struct udevice *dev, void *from, void *to)
 		 * few lines after the end of the frame buffer, since most of
 		 * the update algorithms terminate a line after their last write
 		 */
-		if (offset + size > priv->fb_size)
-		{
+		if (offset + size > priv->fb_size) {
 			size = priv->fb_size - offset;
-		}
-		else if (offset < 0)
-		{
+		} else if (offset < 0) {
 			size += offset;
 			offset = 0;
 		}
@@ -449,11 +421,11 @@ int video_sync_copy_all(struct udevice *dev)
 
 #endif
 
-#define SPLASH_DECL(_name)                \
-	extern u8 __splash_##_name##_begin[]; \
-	extern u8 __splash_##_name##_end[]
+#define SPLASH_DECL(_name) \
+	extern u8 __splash_ ## _name ## _begin[]; \
+	extern u8 __splash_ ## _name ## _end[]
 
-#define SPLASH_START(_name) __splash_##_name##_begin
+#define SPLASH_START(_name)	__splash_ ## _name ## _begin
 
 SPLASH_DECL(u_boot_logo);
 
@@ -478,7 +450,7 @@ int video_default_font_height(struct udevice *dev)
 
 	if (IS_ENABLED(CONFIG_CONSOLE_TRUETYPE))
 		return IF_ENABLED_INT(CONFIG_CONSOLE_TRUETYPE,
-							  CONFIG_CONSOLE_TRUETYPE_SIZE);
+				      CONFIG_CONSOLE_TRUETYPE_SIZE);
 
 	return vc_priv->y_charsize;
 }
@@ -522,15 +494,12 @@ static int video_post_probe(struct udevice *dev)
 	 * TrueType does not support rotation at present so fall back to the
 	 * rotated console in that case.
 	 */
-	if (!priv->rot && IS_ENABLED(CONFIG_CONSOLE_TRUETYPE))
-	{
+	if (!priv->rot && IS_ENABLED(CONFIG_CONSOLE_TRUETYPE)) {
 		snprintf(name, sizeof(name), "%s.vidconsole_tt", dev->name);
 		strcpy(drv, "vidconsole_tt");
-	}
-	else
-	{
+	} else {
 		snprintf(name, sizeof(name), "%s.vidconsole%d", dev->name,
-				 priv->rot);
+			 priv->rot);
 		snprintf(drv, sizeof(drv), "vidconsole%d", priv->rot);
 	}
 
@@ -540,25 +509,21 @@ static int video_post_probe(struct udevice *dev)
 	if (priv->vidconsole_drv_name)
 		drv_name = priv->vidconsole_drv_name;
 	ret = device_bind_driver(dev, drv_name, str, &cons);
-	if (ret)
-	{
+	if (ret) {
 		debug("%s: Cannot bind console driver\n", __func__);
 		return ret;
 	}
 
 	ret = device_probe(cons);
-	if (ret)
-	{
+	if (ret) {
 		debug("%s: Cannot probe console driver\n", __func__);
 		return ret;
 	}
 
 	if (CONFIG_IS_ENABLED(VIDEO_LOGO) &&
-		!CONFIG_IS_ENABLED(SPLASH_SCREEN) && !plat->hide_logo)
-	{
+	    !CONFIG_IS_ENABLED(SPLASH_SCREEN) && !plat->hide_logo) {
 		ret = show_splash(dev);
-		if (ret)
-		{
+		if (ret) {
 			log_debug("Cannot show splash screen\n");
 			return ret;
 		}
@@ -586,29 +551,28 @@ static int video_post_bind(struct udevice *dev)
 	/* Allocate framebuffer space for this device */
 	addr = uc_priv->video_ptr;
 	size = alloc_fb(dev, &addr);
-	if (addr < gd->video_bottom)
-	{
+	if (addr < gd->video_bottom) {
 		/* Device tree node may need the 'bootph-all' or
 		 * 'bootph-some-ram' tag
 		 */
 		printf("Video device '%s' cannot allocate frame buffer memory -ensure the device is set up before relocation\n",
-			   dev->name);
+		       dev->name);
 		return -ENOSPC;
 	}
 	debug("%s: Claiming %lx bytes at %lx for video device '%s'\n",
-		  __func__, size, addr, dev->name);
+	      __func__, size, addr, dev->name);
 	uc_priv->video_ptr = addr;
 
 	return 0;
 }
 
 UCLASS_DRIVER(video) = {
-	.id = UCLASS_VIDEO,
-	.name = "video",
-	.flags = DM_UC_FLAG_SEQ_ALIAS,
-	.post_bind = video_post_bind,
-	.post_probe = video_post_probe,
-	.priv_auto = sizeof(struct video_uc_priv),
-	.per_device_auto = sizeof(struct video_priv),
-	.per_device_plat_auto = sizeof(struct video_uc_plat),
+	.id		= UCLASS_VIDEO,
+	.name		= "video",
+	.flags		= DM_UC_FLAG_SEQ_ALIAS,
+	.post_bind	= video_post_bind,
+	.post_probe	= video_post_probe,
+	.priv_auto	= sizeof(struct video_uc_priv),
+	.per_device_auto	= sizeof(struct video_priv),
+	.per_device_plat_auto	= sizeof(struct video_uc_plat),
 };

@@ -20,8 +20,6 @@ static int gpio_backlight_enable(struct udevice *dev)
 {
 	struct gpio_backlight_priv *priv = dev_get_priv(dev);
 
-	printf("backlight-gpio: enable\n");
-
 	dm_gpio_set_value(&priv->gpio, 1);
 
 	return 0;
@@ -36,8 +34,8 @@ static int gpio_backlight_of_to_plat(struct udevice *dev)
 							   GPIOD_IS_OUT);
 	if (ret)
 	{
-		printf("%s: Warning: cannot get GPIO: ret=%d\n",
-			   __func__, ret);
+		debug("%s: Warning: cannot get GPIO: ret=%d\n",
+			  __func__, ret);
 		return ret;
 	}
 
