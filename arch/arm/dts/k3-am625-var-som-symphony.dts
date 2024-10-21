@@ -28,24 +28,24 @@
 	};
 
 	panel_lvds: panel-lvds {
-		bootph-pre-ram;
+		bootph-pre-ram; //enables this node at SPL stage too
 		compatible = "simple-panel";
 		status= "okay";
 		backlight = <&backlight_lcd>;
-		width-mm = <153>;
-		height-mm = <86>;
-		data-mapping = "jeida-24";
+		width-mm = <261>;
+		height-mm = <163>;
+		data-mapping = "vesa-24";
 		panel-timings {
 			bootph-pre-ram;
-			clock-frequency = <30000>;
-			hactive = <800>;
-			vactive = <480>;
-			hback-porch = <40>;
-			hfront-porch = <40>;
-			vback-porch = <29>;
-			vfront-porch = <13>;
-			hsync-len = <48>;
-			vsync-len = <3>;
+			clock-frequency = <71428>;
+			hactive = <1280>;
+			vactive = <800>;
+			hback-porch = <48>;
+			hfront-porch = <48>;
+			vback-porch = <10>;
+			vfront-porch = <1013>;
+			hsync-len = <64>;
+			vsync-len = <4>;
 			de-active = <1>;
 		};
 		port@0 {
