@@ -10,8 +10,7 @@
 #include <log.h>
 #include <asm/gpio.h>
 
-struct gpio_backlight_priv
-{
+struct gpio_backlight_priv {
 	struct gpio_desc gpio;
 	bool def_value;
 };
@@ -31,11 +30,10 @@ static int gpio_backlight_of_to_plat(struct udevice *dev)
 	int ret;
 
 	ret = gpio_request_by_name(dev, "gpios", 0, &priv->gpio,
-							   GPIOD_IS_OUT);
-	if (ret)
-	{
+				   GPIOD_IS_OUT);
+	if (ret) {
 		debug("%s: Warning: cannot get GPIO: ret=%d\n",
-			  __func__, ret);
+		      __func__, ret);
 		return ret;
 	}
 
@@ -55,19 +53,20 @@ static int gpio_backlight_probe(struct udevice *dev)
 }
 
 static const struct backlight_ops gpio_backlight_ops = {
-	.enable = gpio_backlight_enable,
+	.enable	= gpio_backlight_enable,
 };
 
 static const struct udevice_id gpio_backlight_ids[] = {
-	{.compatible = "gpio-backlight"},
-	{}};
+	{ .compatible = "gpio-backlight" },
+	{ }
+};
 
 U_BOOT_DRIVER(gpio_backlight) = {
-	.name = "gpio_backlight",
-	.id = UCLASS_PANEL_BACKLIGHT,
+	.name	= "gpio_backlight",
+	.id	= UCLASS_PANEL_BACKLIGHT,
 	.of_match = gpio_backlight_ids,
-	.ops = &gpio_backlight_ops,
-	.of_to_plat = gpio_backlight_of_to_plat,
-	.probe = gpio_backlight_probe,
-	.priv_auto = sizeof(struct gpio_backlight_priv),
+	.ops	= &gpio_backlight_ops,
+	.of_to_plat	= gpio_backlight_of_to_plat,
+	.probe		= gpio_backlight_probe,
+	.priv_auto	= sizeof(struct gpio_backlight_priv),
 };
