@@ -12,7 +12,7 @@
 
 / {
 	compatible =  "ti,am625-sk", "ti,am625";
-	model = "Variscite VAR-SOM-AM62 on Slice Luxomed";
+	model = "Variscite VAR-SOM-AM62 on Slice Luxomed (uboot)";
 
 	backlight_lcd: backlight-lcd {
 		compatible = "gpio-backlight";
