@@ -63,6 +63,7 @@
 		};
 	};
 
+	//SD Power on Schematic (to turn on or off SD power)
 	vdd_mmc1: regulator-3 {
 		compatible = "regulator-fixed";
 		regulator-name = "SD_power_en";
