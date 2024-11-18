@@ -1,19 +1,19 @@
 // SPDX-License-Identifier: GPL-2.0
 /*
  * VAR-SOM-AM62 dts file for SPLs
- * Copyright (C) 2021-2022 Texas Instruments Incorporated - https://www.ti.com/
- * Copyright (C) 2023-2024 Variscite Ltd. - https://www.variscite.com/
+ * Copyright (C) 2021-2022 Texas Instruments Incorporated - https: //www.ti.com/
+ * Copyright (C) 2023-2024 Variscite Ltd. - https: //www.variscite.com/
  */
 #include "k3-am625-var-som-slice-luxomed-binman.dtsi"
 
 / {
 	aliases {
 		mmc0 = &sdhci0;
-		mmc1 = &sdhci1;
+		// mmc1 = &sdhci1;
 	};
 
 	chosen {
-		stdout-path = "serial2:115200n8";
+		stdout-path = "serial2: 115200n8";
 		tick-timer = &timer1;
 	};
 
@@ -22,7 +22,7 @@
 	};
 };
 
-&cbass_main{
+&cbass_main {
 	bootph-pre-ram;
 
 	timer1: timer@2400000 {
@@ -43,31 +43,31 @@
 	bootph-pre-ram;
 };
 
-&cpsw3g {
-	/delete-property/ ranges;
-	/* This is WA because MDIO driver is not DM enabled */
-	bootph-pre-ram;
+// &cpsw3g {
+	//     /delete-property/ ranges;
+	//     /* This is WA because MDIO driver is not DM enabled */
+	//     bootph-pre-ram;
 
-	cpsw-phy-sel@04044 {
-		compatible = "ti,am64-phy-gmii-sel";
-		reg = <0x0 0x00104044 0x0 0x8>;
-		bootph-pre-ram;
-	};
-};
+	//     cpsw-phy-sel@4044 {
+		//         compatible = "ti,am64-phy-gmii-sel";
+		//         reg = <0x0 0x00104044 0x0 0x8>;
+		//         bootph-pre-ram;
+	//     };
+// };
 
-&cpsw3g_phy0 {
-	bootph-pre-ram;
-};
+// &cpsw3g_phy0 {
+	//     bootph-pre-ram;
+// };
 
-&cpsw_port1 {
-	/* Variscite MAC addresses assigned by EEPROM/env */
-	/delete-property/ ti,syscon-efuse;
-	bootph-pre-ram;
-};
+// &cpsw_port1 {
+	//     /* Variscite MAC addresses assigned by EEPROM/env */
+	//     /delete-property/ ti,syscon-efuse;
+	//     bootph-pre-ram;
+// };
 
-&cpsw_port2 {
-	bootph-pre-ram;
-};
+// &cpsw_port2 {
+	//     bootph-pre-ram;
+// };
 
 &dmsc {
 	bootph-pre-ram;
@@ -107,8 +107,14 @@
 	      <0x00 0x48600000 0x00 0x8000>,
 	      <0x00 0x484a4000 0x00 0x2000>,
 	      <0x00 0x484c2000 0x00 0x2000>;
-	reg-names = "gcfg", "bchanrt", "rchanrt", "tchanrt",
-		    "ringrt" , "cfg", "tchan", "rchan";
+	reg-names = "gcfg",
+	            "bchanrt",
+	            "rchanrt",
+	            "tchanrt",
+	            "ringrt" ,
+	            "cfg",
+	            "tchan",
+	            "rchan";
 };
 
 &main_gpio0 {
@@ -148,13 +154,13 @@
 	bootph-pre-ram;
 };
 
-&main_mdio1_pins_default {
-	bootph-pre-ram;
-};
+// &main_mdio1_pins_default {
+	//     bootph-pre-ram;
+// };
 
-&main_mmc1_pins_default {
-	bootph-pre-ram;
-};
+// &main_mmc1_pins_default {
+	//     bootph-pre-ram;
+// };
 
 &main_pktdma {
 	bootph-pre-ram;
@@ -166,17 +172,23 @@
 	      <0x00 0x484a0000 0x00 0x2000>,
 	      <0x00 0x484c0000 0x00 0x2000>,
 	      <0x00 0x48430000 0x00 0x1000>;
-	reg-names = "gcfg", "rchanrt", "tchanrt", "ringrt",
-		    "cfg", "tchan", "rchan", "rflow";
+	reg-names = "gcfg",
+	            "rchanrt",
+	            "tchanrt",
+	            "ringrt",
+	            "cfg",
+	            "tchan",
+	            "rchan",
+	            "rflow";
 };
 
 &main_pmx0 {
 	bootph-pre-ram;
 };
 
-&main_rgmii1_pins_default {
-	bootph-pre-ram;
-};
+// &main_rgmii1_pins_default {
+	//     bootph-pre-ram;
+// };
 
 &main_uart0 {
 	bootph-pre-ram;
@@ -218,9 +230,9 @@
 	bootph-pre-ram;
 };
 
-&sdhci1 {
-	bootph-pre-ram;
-};
+// &sdhci1 {
+	//     bootph-pre-ram;
+// };
 
 &secure_proxy_main {
 	bootph-pre-ram;
@@ -245,17 +257,17 @@
 	bootph-pre-ram;
 };
 
-&vdd_mmc1 {
-	bootph-pre-ram;
-};
+// &vdd_mmc1 {
+	//     bootph-pre-ram;
+// };
 
-&vdd_sd_dv {
-	bootph-pre-ram;
-};
+// &vdd_sd_dv {
+	//     bootph-pre-ram;
+// };
 
-&vdd_sd_dv_pins_default {
-	bootph-pre-ram;
-};
+// &vdd_sd_dv_pins_default {
+	//     bootph-pre-ram;
+// };
 
 &wkup_conf {
 	bootph-pre-ram;
