@@ -12,7 +12,7 @@
 
 / {
 	compatible = "ti,am625-sk", "ti,am625";
-	model = "Variscite VAR-SOM-AM62 on Slice Luxomed Board (u-boot)";
+	model = "Variscite VAR-SOM-AM62 on Slice Luxomed Board (u-boot minimal)";
 
 	backlight_lcd: backlight-lcd {
 		compatible = "gpio-backlight";
@@ -55,36 +55,36 @@
 		};
 	};
 
-	// //SD Power on Schematic (to turn on or off SD power)
-	// vdd_mmc1: regulator-3 {
-		//     compatible = "regulator-fixed";
-		//     regulator-name = "SD_power_en";
-		//     pinctrl-names = "default";
-		//     pinctrl-0 = <&vdd_mmc1_pins_default>;
-		//     regulator-min-microvolt = <3300000>;
-		//     regulator-max-microvolt = <3300000>;
-		//     regulator-boot-on;
-		//     enable-active-high;
-		//     gpio = <&main_gpio0 30 GPIO_ACTIVE_HIGH>;
-	// };
+	//SD Power on Schematic (to turn on or off SD power)
+	vdd_mmc1: regulator-3 {
+		compatible = "regulator-fixed";
+		regulator-name = "SD_power_en";
+		pinctrl-names = "default";
+		pinctrl-0 = <&vdd_mmc1_pins_default>;
+		regulator-min-microvolt = <3300000>;
+		regulator-max-microvolt = <3300000>;
+		regulator-boot-on;
+		enable-active-high;
+		gpio = <&main_gpio0 30 GPIO_ACTIVE_HIGH>;
+	};
 
-	// //used to change sd voltage from 3.3V to 1.8V
-	// vdd_sd_dv: gpio-regulator-4 {
-		//     compatible = "regulator-gpio";
-		//     regulator-name = "SD_voltage_sel";
-		//     pinctrl-names = "default";
-		//     pinctrl-0 = <&vdd_sd_dv_pins_default>;//Array of one or more GPIO pins used to select the regulator voltage/current listed in "states"
-		//     regulator-min-microvolt = <1800000>;
-		//     regulator-max-microvolt = <3300000>;
-		//     regulator-boot-on;
-		//     gpios = <&main_gpio0 56 GPIO_ACTIVE_HIGH>;
-		//     states = <1800000 0x0>,
-						//          <3300000 0x1>;
-		//     //states: Selection of available voltages/currents provided by
-		//     //this regulator and matching GPIO configurations to
-		//     //achieve them. If there are no states in the "states"
-		//     //array, use a fixed regulator instead
-	// };
+	//used to change sd voltage from 3.3V to 1.8V
+	vdd_sd_dv: gpio-regulator-4 {
+		compatible = "regulator-gpio";
+		regulator-name = "SD_voltage_sel";
+		pinctrl-names = "default";
+		pinctrl-0 = <&vdd_sd_dv_pins_default>;//Array of one or more GPIO pins used to select the regulator voltage/current listed in "states"
+		regulator-min-microvolt = <1800000>;
+		regulator-max-microvolt = <3300000>;
+		regulator-boot-on;
+		gpios = <&main_gpio0 56 GPIO_ACTIVE_HIGH>;
+		states = <1800000 0x0>,
+				 <3300000 0x1>;
+		//states: Selection of available voltages/currents provided by
+		//this regulator and matching GPIO configurations to
+		//achieve them. If there are no states in the "states"
+		//array, use a fixed regulator instead
+	};
 };
 
 &cpsw3g {
@@ -165,17 +165,17 @@
 		>;
 	};
 
-	// main_mmc1_pins_default: main-mmc1-pins-default {
-		//     pinctrl-single,pins = <
-		//     AM62X_IOPAD(0x23c, PIN_INPUT, 0) /* (A21) MMC1_CMD */
-		//     AM62X_IOPAD(0x234, PIN_INPUT, 0) /* (B22) MMC1_CLK */
-		//     AM62X_IOPAD(0x230, PIN_INPUT, 0) /* (A22) MMC1_DAT0 */
-		//     AM62X_IOPAD(0x22c, PIN_INPUT, 0) /* (B21) MMC1_DAT1 */
-		//     AM62X_IOPAD(0x228, PIN_INPUT, 0) /* (C21) MMC1_DAT2 */
-		//     AM62X_IOPAD(0x224, PIN_INPUT, 0) /* (D22) MMC1_DAT3 */
-		//     AM62X_IOPAD(0x240, PIN_INPUT, 0) /* (D17) MMC1_SDCD */
-		//     >;
-	// };
+	main_mmc1_pins_default: main-mmc1-pins-default {
+		pinctrl-single,pins = <
+		AM62X_IOPAD(0x23c, PIN_INPUT, 0) /* (A21) MMC1_CMD */
+		AM62X_IOPAD(0x234, PIN_INPUT, 0) /* (B22) MMC1_CLK */
+		AM62X_IOPAD(0x230, PIN_INPUT, 0) /* (A22) MMC1_DAT0 */
+		AM62X_IOPAD(0x22c, PIN_INPUT, 0) /* (B21) MMC1_DAT1 */
+		AM62X_IOPAD(0x228, PIN_INPUT, 0) /* (C21) MMC1_DAT2 */
+		AM62X_IOPAD(0x224, PIN_INPUT, 0) /* (D22) MMC1_DAT3 */
+		AM62X_IOPAD(0x240, PIN_INPUT, 0) /* (D17) MMC1_SDCD */
+		>;
+	};
 
 	main_oldi0_pins_default: main-oldi0-pins-default {
 		pinctrl-single,pins = <
@@ -213,17 +213,13 @@
 		pinctrl-single,pins = <AM62X_IOPAD(0x0258, PIN_OUTPUT, 0) /* (F18) USB1_DRVVBUS */>;
 	};
 
-	// vdd_mmc1_pins_default: vdd-mmc1-pins-default {
-		//     pinctrl-single,pins = <
-		//         AM62X_IOPAD(0x0078, PIN_OUTPUT, 7) /* (U24) GPMC0_AD15.GPIO0_30 */
-		//     >;
-	// };
+	vdd_mmc1_pins_default: vdd-mmc1-pins-default {
+		pinctrl-single,pins = <AM62X_IOPAD(0x0078, PIN_OUTPUT, 7) /* (U24) GPMC0_AD15.GPIO0_30 */>;
+	};
 
-	// vdd_sd_dv_pins_default: vdd-sd-dv-pins-default {
-		//     pinctrl-single,pins = <
-		//         AM62X_IOPAD(0x00e4, PIN_OUTPUT, 7) /* (AA23) VOUT0_DATA11.GPIO0_56 */
-		//     >;
-	// };
+	vdd_sd_dv_pins_default: vdd-sd-dv-pins-default {
+		pinctrl-single,pins = <AM62X_IOPAD(0x00e4, PIN_OUTPUT, 7) /* (AA23) VOUT0_DATA11.GPIO0_56 */>;
+	};
 };
 
 &main_uart0 {
@@ -247,12 +243,12 @@
 
 /* SD card */
 &sdhci1 {
-	status = "disabled";
-	// vmmc-supply = <&vdd_mmc1>;//phandle to the regulator device tree node, mentioned as the VCC/VDD supply in the eMMC/SD specs.
-	// vqmmc-supply = <&vdd_sd_dv>;//phandle to the regulator device tree node, mentioned as the VCCQ/VDD_IO supply in the eMMC/SD specs
-	// pinctrl-names = "default";
-	// pinctrl-0 = <&main_mmc1_pins_default>;
-	// disable-wp;
+	status = "okay";
+	vmmc-supply = <&vdd_mmc1>;//phandle to the regulator device tree node, mentioned as the VCC/VDD supply in the eMMC/SD specs.
+	vqmmc-supply = <&vdd_sd_dv>;//phandle to the regulator device tree node, mentioned as the VCCQ/VDD_IO supply in the eMMC/SD specs
+	pinctrl-names = "default";
+	pinctrl-0 = <&main_mmc1_pins_default>;
+	disable-wp;
 };
 
 &usb0 {

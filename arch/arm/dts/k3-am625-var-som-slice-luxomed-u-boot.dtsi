@@ -9,7 +9,7 @@
 / {
 	aliases {
 		mmc0 = &sdhci0;
-		// mmc1 = &sdhci1;
+		mmc1 = &sdhci1;
 	};
 
 	chosen {
@@ -155,12 +155,12 @@
 };
 
 // &main_mdio1_pins_default {
-	//     bootph-pre-ram;
+	//         bootph-pre-ram;
 // };
 
-// &main_mmc1_pins_default {
-	//     bootph-pre-ram;
-// };
+&main_mmc1_pins_default {
+	bootph-pre-ram;
+};
 
 &main_pktdma {
 	bootph-pre-ram;
@@ -230,9 +230,9 @@
 	bootph-pre-ram;
 };
 
-// &sdhci1 {
-	//     bootph-pre-ram;
-// };
+&sdhci1 {
+	bootph-pre-ram;
+};
 
 &secure_proxy_main {
 	bootph-pre-ram;
@@ -257,17 +257,17 @@
 	bootph-pre-ram;
 };
 
-// &vdd_mmc1 {
-	//     bootph-pre-ram;
-// };
+&vdd_mmc1 {
+	bootph-pre-ram;
+};
 
-// &vdd_sd_dv {
-	//     bootph-pre-ram;
-// };
+&vdd_sd_dv {
+	bootph-pre-ram;
+};
 
-// &vdd_sd_dv_pins_default {
-	//     bootph-pre-ram;
-// };
+&vdd_sd_dv_pins_default {
+	bootph-pre-ram;
+};
 
 &wkup_conf {
 	bootph-pre-ram;
