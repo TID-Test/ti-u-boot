@@ -43,14 +43,17 @@ int board_init(void)
 	return 0;
 }
 
-int read_eeprom_header(void) {
+int read_eeprom_header(void)
+{
 	struct var_eeprom *ep = VAR_EEPROM_DATA;
 	struct var_eeprom eeprom = {0};
 	int ret = 0;
 
-	if (!var_eeprom_is_valid(ep)) {
+	if (!var_eeprom_is_valid(ep))
+	{
 		ret = var_eeprom_read_header(&eeprom);
-		if (ret) {
+		if (ret)
+		{
 			printf("%s EEPROM read failed.\n", __func__);
 			return -1;
 		}
@@ -62,7 +65,8 @@ int read_eeprom_header(void) {
 
 phys_size_t get_effective_memsize(void)
 {
-	phys_size_t ram_size;;
+	phys_size_t ram_size;
+	;
 
 	/*
 	 * Just below 512MB are TF-A and OPTEE reserve regions, thus
@@ -78,8 +82,7 @@ phys_size_t get_effective_memsize(void)
 	return ram_size;
 #else
 	/* limit stack to what we can reasonable map */
-	return ((ram_size > CFG_MAX_MEM_MAPPED) ?
-		CFG_MAX_MEM_MAPPED : ram_size);
+	return ((ram_size > CFG_MAX_MEM_MAPPED) ? CFG_MAX_MEM_MAPPED : ram_size);
 #endif
 }
 
@@ -103,14 +106,16 @@ void spl_perform_fixups(struct spl_image_info *spl_image)
 #define ENV_STR_SIZE 10
 
 #ifdef CONFIG_BOARD_LATE_INIT
-void set_bootdevice_env(void) {
-	int * boot_device = (int *) VAR_SCRATCH_BOOT_DEVICE;
+void set_bootdevice_env(void)
+{
+	int *boot_device = (int *)VAR_SCRATCH_BOOT_DEVICE;
 	char env_str[ENV_STR_SIZE];
 
 	snprintf(env_str, ENV_STR_SIZE, "%d", *boot_device);
 	env_set("boot_dev", env_str);
 
-	switch(*boot_device) {
+	switch (*boot_device)
+	{
 	case BOOT_DEVICE_MMC2:
 		printf("Boot Device: SD\n");
 		env_set("boot_dev_name", "sd");
@@ -129,7 +134,8 @@ void set_bootdevice_env(void) {
 #define SDRAM_SIZE_STR_LEN 5
 
 /* configure AUDIO_EXT_REFCLK1 pin as an output*/
-static void audio_refclk1_ctrl_clkout_en(void) {
+static void audio_refclk1_ctrl_clkout_en(void)
+{
 	volatile uint32_t *audio_refclk1_ctrl_ptr = (volatile uint32_t *)0x001082E4;
 	uint32_t audio_refclk1_ctrl_val = *audio_refclk1_ctrl_ptr;
 	audio_refclk1_ctrl_val |= (1 << 15);
@@ -151,7 +157,7 @@ int board_late_init(void)
 	set_bootdevice_env();
 
 	snprintf(sdram_size_str, SDRAM_SIZE_STR_LEN, "%d",
-			(int) (gd->ram_size / 1024 / 1024));
+			 (int)(gd->ram_size / 1024 / 1024));
 	env_set("sdram_size", sdram_size_str);
 
 #ifdef CONFIG_ENV_IS_IN_MMC
@@ -167,14 +173,15 @@ int board_late_init(void)
 }
 #endif
 
-#define CTRLMMR_USB0_PHY_CTRL	0x43004008
-#define CTRLMMR_USB1_PHY_CTRL	0x43004018
-#define CORE_VOLTAGE		0x80000000
+#define CTRLMMR_USB0_PHY_CTRL 0x43004008
+#define CTRLMMR_USB1_PHY_CTRL 0x43004018
+#define CORE_VOLTAGE 0x80000000
 
 #ifdef CONFIG_SPL_BOARD_INIT
 static int video_setup(void)
 {
-	if (CONFIG_IS_ENABLED(VIDEO)) {
+	if (CONFIG_IS_ENABLED(VIDEO))
+	{
 		ulong addr;
 		int ret;
 
@@ -183,7 +190,7 @@ static int video_setup(void)
 		if (ret)
 			return ret;
 		debug("Reserving %luk for video at: %08lx\n",
-		      ((unsigned long)gd->relocaddr - addr) >> 10, addr);
+			  ((unsigned long)gd->relocaddr - addr) >> 10, addr);
 		gd->relocaddr = addr;
 	}
 
@@ -195,7 +202,8 @@ int ft_board_setup(void *blob, struct bd_info *bd)
 {
 	int ret = -1;
 
-	if (CONFIG_IS_ENABLED(VIDEO)) {
+	if (CONFIG_IS_ENABLED(VIDEO))
+	{
 		if (IS_ENABLED(CONFIG_FDT_SIMPLEFB))
 			ret = fdt_simplefb_enable_and_mem_rsv(blob);
 
@@ -216,7 +224,7 @@ void spl_board_init(void)
 
 #ifndef CONFIG_CPU_V7R
 	/* Save boot_device for U-Boot */
-	int * boot_device = (int *) VAR_SCRATCH_BOOT_DEVICE;
+	int *boot_device = (int *)VAR_SCRATCH_BOOT_DEVICE;
 	*boot_device = spl_boot_device();
 #endif
 

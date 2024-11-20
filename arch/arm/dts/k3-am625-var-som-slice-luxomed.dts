@@ -87,6 +87,24 @@
 	};
 };
 
+// &main_gpio1 {
+	//     bootph-pre-ram;
+	//     pinctrl-names = "default";
+	//     pinctrl-0 = <&buzzer_gpio_pins_default>;
+	//     status = "okay";
+	//     u-boot,dm-spl;
+
+	//     gpio1_10 {
+		//         compatible = "gpio-test";
+		//         bootph-pre-ram;
+		//         gpio-hog;
+		//         gpios = <10 GPIO_ACTIVE_HIGH>; /* GPIO pin 10 */
+		//         output-low; /* Set initial state high, use output-low for low */
+		//         line-name = "gpio1_10_buzzer";
+		//         u-boot,dm-spl;
+	//     };
+// };
+
 &cpsw3g {
 	status = "disabled";
 	// pinctrl-names = "default";
@@ -140,6 +158,13 @@
 };
 
 &main_pmx0 {
+	// pinctrl-names = "default";
+	// pinctrl-0 = <&buzzer_gpio_pins_default>;
+	// buzzer_gpio_pins_default: buzzer_gpio_pins_default {
+		//     pinctrl-single,pins = <AM62X_IOPAD(0x01a0, PIN_INPUT_PULLDOWN, 7) /* (E18) MCASP0_AXR0.GPIO1_10 */>;
+		//     u-boot,dm-spl;
+	// };
+
 	lcd_backlight_pins_default: lcd-backlight-pins-default {
 		pinctrl-single,pins = <AM62X_IOPAD(0x19c, PIN_INPUT_PULLUP, 0) /* (B18) GPIO_1_9 */>;
 	};
@@ -209,9 +234,9 @@
 		>;
 	};
 
-	main_usb1_pins_default: main-usb1-pins-default {
-		pinctrl-single,pins = <AM62X_IOPAD(0x0258, PIN_OUTPUT, 0) /* (F18) USB1_DRVVBUS */>;
-	};
+	// main_usb1_pins_default: main-usb1-pins-default {
+		//     pinctrl-single,pins = <AM62X_IOPAD(0x0258, PIN_OUTPUT, 0) /* (F18) USB1_DRVVBUS */>;
+	// };
 
 	vdd_mmc1_pins_default: vdd-mmc1-pins-default {
 		pinctrl-single,pins = <AM62X_IOPAD(0x0078, PIN_OUTPUT, 7) /* (U24) GPMC0_AD15.GPIO0_30 */>;
@@ -251,24 +276,24 @@
 	disable-wp;
 };
 
-&usb0 {
-	dr_mode = "peripheral";
-};
+// &usb0 {
+	//     dr_mode = "peripheral";
+// };
 
-&usb1 {
-	dr_mode = "host";
-	pinctrl-names = "default";
-	pinctrl-0 = <&main_usb1_pins_default>;
-};
+// &usb1 {
+	//     dr_mode = "host";
+	//     pinctrl-names = "default";
+	//     pinctrl-0 = <&main_usb1_pins_default>;
+// };
 
-&usbss0 {
-	status = "okay";
-	ti,vbus-divider;
-};
+// &usbss0 {
+	//     status = "okay";
+	//     ti,vbus-divider;
+// };
 
-&usbss1 {
-	status = "okay";
-};
+// &usbss1 {
+	//     status = "okay";
+// };
 
 &wkup_i2c0 {
 	status = "disabled";
