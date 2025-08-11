@@ -310,6 +310,11 @@
 		pinctrl-single,pins = <AM62X_IOPAD(0x19c, PIN_INPUT_PULLUP, 0) /* (B18) GPIO_1_9 */>;
 	};
 
+	//Interrupt for Input GPIO Expander
+	pca9555_irq_default: pca9555_irq_default {
+		pinctrl-single,pins = <AM62X_IOPAD(0x01b4, PIN_INPUT, 7) /* (A13) SPI0_CS0.GPIO1_15 */>;
+	};
+
 	main_i2c0_pins_default: main-i2c0-pins-default {
 		pinctrl-single,pins = <
 		AM62X_IOPAD(0x1e0, PIN_INPUT_PULLUP, 0) /* (B16) I2C0_SCL */
