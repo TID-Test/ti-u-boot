@@ -35,7 +35,7 @@
 #include <dm/uclass.h>
 
 #define PCA9555OUT_ADDR 0x20
-#define PCA9555IN_ADDR 0x20
+#define PCA9555IN_ADDR 0x21
 #define PCA9555_I2C_BUS 2
 
 static void pca9555_init(void)
@@ -52,9 +52,11 @@ static void pca9555_init(void)
 	}
 	if (i2c_get_chip_for_busnum(PCA9555_I2C_BUS, PCA9555IN_ADDR, 1, &devIn))
 	{
-		printf("Failed to get PCA9555 output device\n");
+		printf("Failed to get PCA9555 input device\n");
 		return;
 	}
+
+	printf("Succeeded to get PCA9555 input and output devices\n");
 
 	uchar data;
 	data = 0x00;
@@ -264,6 +266,9 @@ int ft_board_setup(void *blob, struct bd_info *bd)
 void spl_board_init(void)
 {
 	u32 val;
+
+	printf("spl_board_init : AM62x VAR-SOM board initialization\n");
+	pca9555_init();
 
 #ifndef CONFIG_CPU_V7R
 	/* Save boot_device for U-Boot */
