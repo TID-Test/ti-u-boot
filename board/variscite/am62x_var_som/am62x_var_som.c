@@ -41,6 +41,7 @@
 static void pca9555_init(void)
 {
 	struct udevice *devOut;
+	struct udevice *devIn;
 	uint8_t val;
 
 	// Get the device at address 0x20 on bus 0
