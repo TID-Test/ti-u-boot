@@ -80,6 +80,7 @@ DECLARE_GLOBAL_DATA_PTR;
 
 int board_init(void)
 {
+	printf("ES Board Init)");
 	pca9555_init();
 
 	if (IS_ENABLED(CONFIG_BOARD_HAS_32K_RTC_CRYSTAL))
@@ -267,7 +268,7 @@ void spl_board_init(void)
 {
 	u32 val;
 
-	printf("spl_board_init : AM62x VAR-SOM board initialization\n");
+	printf("ES SPL Board Init)");
 	pca9555_init();
 
 #ifndef CONFIG_CPU_V7R
