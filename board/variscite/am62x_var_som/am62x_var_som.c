@@ -31,39 +31,12 @@
 
 #include "../common/k3-ddr-init.h"
 
-#include <i2c.h>
-#define PCA9555OUT_ADDR 0x20
-#define PCA9555IN_ADDR 0x20
-
-static void pca9555_init(void)
-{
-	uchar data;
-
-	i2c_set_bus_num(2);
-	// Set output values low first
-	data = 0x00;
-	i2c_write(PCA9555OUT_ADDR, 0x02, 1, &data, 1); // Port0
-	i2c_write(PCA9555OUT_ADDR, 0x03, 1, &data, 1); // Port1
-	// Set directions to output
-	i2c_write(PCA9555OUT_ADDR, 0x06, 1, &data, 1); // Port0 config
-	i2c_write(PCA9555OUT_ADDR, 0x07, 1, &data, 1); // Port1 config
-
-	i2c_write(PCA9555IN_ADDR, 0x02, 1, &data, 1); // Port0
-	i2c_write(PCA9555IN_ADDR, 0x03, 1, &data, 1); // Port1
-	// Set directions to output
-	i2c_write(PCA9555IN_ADDR, 0x06, 1, &data, 1); // Port0 config
-	data = 0xF0;
-	i2c_write(PCA9555IN_ADDR, 0x07, 1, &data, 1); // Port1 config
-}
-
 int var_setup_mac(struct var_eeprom *eeprom);
 
 DECLARE_GLOBAL_DATA_PTR;
 
 int board_init(void)
 {
-	pca9555_init();
-
 	if (IS_ENABLED(CONFIG_BOARD_HAS_32K_RTC_CRYSTAL))
 		board_rtc_init();
 
