@@ -32,28 +32,47 @@
 #include "../common/k3-ddr-init.h"
 
 #include <i2c.h>
+#include "i2c_common.h"
+
 #define PCA9555OUT_ADDR 0x20
 #define PCA9555IN_ADDR 0x20
+#define PCA9555_I2C_BUS 2
 
 static void pca9555_init(void)
 {
+	int ret;
+	DEVICE_HANDLE_T devOut;
+	DEVICE_HANDLE_T devIn;
+
+	/* Open device handle */
+	ret = fsl_i2c_get_device(PCA9555OUT_ADDR, PCA9555_I2C_BUS, &devOut);
+	if (ret)
+	{
+		printf("PCA9555 OUT device found\n");
+		return ret;
+	}
+
+	ret = fsl_i2c_get_device(PCA9555IN_ADDR, PCA9555_I2C_BUS, &devIn);
+	if (ret)
+	{
+		printf("PCA9555 OUT device found\n");
+		return ret;
+	}
+
 	uchar data;
-
-	i2c_set_bus_num(2);
-	// Set output values low first
 	data = 0x00;
-	i2c_write(PCA9555OUT_ADDR, 0x02, 1, &data, 1); // Port0
-	i2c_write(PCA9555OUT_ADDR, 0x03, 1, &data, 1); // Port1
+	I2C_WRITE(devOut, 0x02, &data, 1); // Port0
+	I2C_WRITE(devOut, 0x03, &data, 1); // Port1
 	// Set directions to output
-	i2c_write(PCA9555OUT_ADDR, 0x06, 1, &data, 1); // Port0 config
-	i2c_write(PCA9555OUT_ADDR, 0x07, 1, &data, 1); // Port1 config
+	I2C_WRITE(devOut, 0x06, &data, 1); // Port0 config
+	I2C_WRITE(devOut, 0x07, &data, 1); // Port1 config
 
-	i2c_write(PCA9555IN_ADDR, 0x02, 1, &data, 1); // Port0
-	i2c_write(PCA9555IN_ADDR, 0x03, 1, &data, 1); // Port1
+	I2C_WRITE(devIn, 0x02, &data, 1); // Port0
+	I2C_WRITE(devIn, 0x03, &data, 1); // Port1
 	// Set directions to output
-	i2c_write(PCA9555IN_ADDR, 0x06, 1, &data, 1); // Port0 config
+	I2C_WRITE(devIn, 0x06, &data, 1); // Port0 config
 	data = 0xF0;
-	i2c_write(PCA9555IN_ADDR, 0x07, 1, &data, 1); // Port1 config
+	I2C_WRITE(devIn, 0x07, &data, 1); // Port1 config
 }
 
 int var_setup_mac(struct var_eeprom *eeprom);
