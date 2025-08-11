@@ -284,6 +284,18 @@
 		#gpio-cells = <2>;
 		status = "okay";
 	};
+	pca9555In: pca9555In@21 {
+		compatible = "nxp,pca9555";
+		reg = <0x21>;
+		gpio-controller;
+		pinctrl-names = "default";
+		pinctrl-0 = <&pca9555_irq_default>;
+		interrupt-parent = <&main_gpio1>;
+		interrupts = <15 IRQ_TYPE_EDGE_FALLING>;
+		#gpio-cells = <2>;
+		wakeup-source;
+		status = "okay";
+	};
 };
 
 &main_pmx0 {
