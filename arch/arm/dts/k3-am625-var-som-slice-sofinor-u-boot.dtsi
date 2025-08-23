@@ -43,27 +43,27 @@
 	bootph-pre-ram;
 };
 
-// &cpsw3g {
-	//     /delete-property/ ranges;
-	//     /* This is WA because MDIO driver is not DM enabled */
-	//     bootph-pre-ram;
+&cpsw3g {
+	    /delete-property/ ranges;
+	    /* This is WA because MDIO driver is not DM enabled */
+	    bootph-pre-ram;
 
-	//     cpsw-phy-sel@4044 {
-		//         compatible = "ti,am64-phy-gmii-sel";
-		//         reg = <0x0 0x00104044 0x0 0x8>;
-		//         bootph-pre-ram;
-	//     };
-// };
+	    cpsw-phy-sel@4044 {
+		        compatible = "ti,am64-phy-gmii-sel";
+		        reg = <0x0 0x00104044 0x0 0x8>;
+		        bootph-pre-ram;
+	    };
+};
 
-// &cpsw3g_phy0 {
-	//     bootph-pre-ram;
-// };
+&cpsw3g_phy0 {
+	    bootph-pre-ram;
+};
 
-// &cpsw_port1 {
-	//     /* Variscite MAC addresses assigned by EEPROM/env */
-	//     /delete-property/ ti,syscon-efuse;
-	//     bootph-pre-ram;
-// };
+&cpsw_port1 {
+	    /* Variscite MAC addresses assigned by EEPROM/env */
+	    /delete-property/ ti,syscon-efuse;
+	    bootph-pre-ram;
+};
 
 // &cpsw_port2 {
 	//     bootph-pre-ram;
@@ -154,9 +154,9 @@
 	bootph-pre-ram;
 };
 
-// &main_mdio1_pins_default {
-	//         bootph-pre-ram;
-// };
+&main_mdio1_pins_default {
+	        bootph-pre-ram;
+};
 
 &main_mmc1_pins_default {
 	bootph-pre-ram;
@@ -186,9 +186,9 @@
 	bootph-pre-ram;
 };
 
-// &main_rgmii1_pins_default {
-	//     bootph-pre-ram;
-// };
+&main_rgmii1_pins_default {
+	    bootph-pre-ram;
+};
 
 &main_uart0 {
 	bootph-pre-ram;
@@ -238,20 +238,20 @@
 	bootph-pre-ram;
 };
 
-// &usb0 {
-	//     dr_mode = "peripheral";
-	//     /* Since role switching is not supported in U-Boot */
-	//     /delete-property/ extcon;
-	//     bootph-pre-ram;
-// };
+&usb0 {
+	    dr_mode = "peripheral";
+	    /* Since role switching is not supported in U-Boot */
+	    /delete-property/ extcon;
+	    bootph-pre-ram;
+};
 
 // &usb1 {
 	//     bootph-pre-ram;
 // };
 
-// &usbss0 {
-	//     bootph-pre-ram;
-// };
+&usbss0 {
+	    bootph-pre-ram;
+};
 
 // &usbss1 {
 	//     bootph-pre-ram;
@@ -277,9 +277,9 @@
 	bootph-pre-ram;
 };
 
-// &main_gpio1 {
-	//     bootph-pre-ram;
-	//     gpio1_10 {
-		//         bootph-pre-ram;
-	//     };
-// };
+&main_gpio1 {
+	    bootph-pre-ram;
+	    gpio1_10 {
+		        bootph-pre-ram;
+	    };
+};

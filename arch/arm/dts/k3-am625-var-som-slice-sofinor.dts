@@ -224,15 +224,15 @@
 	//     };
 // };
 
-&cpsw3g {
-	status = "disabled";
-	// pinctrl-names = "default";
-	// pinctrl-0 = <&main_rgmii1_pins_default>;
+&cpsw3g_mdio {
+	cpsw3g_phy1: ethernet-phy@5 {
+		reg = <5>;
+	};
 };
 
-&cpsw_port1 {
-	status = "disabled";
-};
+// &cpsw_port1 {
+// 	status = "disabled";
+// };
 
 &cpsw_port2 {
 	status = "disabled";
@@ -380,9 +380,11 @@
 		>;
 	};
 
-	// main_usb1_pins_default: main-usb1-pins-default {
-		//     pinctrl-single,pins = <AM62X_IOPAD(0x0258, PIN_OUTPUT, 0) /* (F18) USB1_DRVVBUS */>;
-	// };
+	main_usb1_pins_default: main-usb1-pins-default {
+		pinctrl-single,pins = <
+		AM62X_IOPAD(0x0258, PIN_OUTPUT, 0) /* (F18) USB1_DRVVBUS */
+		>;
+	};
 
 	vdd_mmc1_pins_default: vdd-mmc1-pins-default {
 		pinctrl-single,pins = <AM62X_IOPAD(0x0078, PIN_OUTPUT, 7) /* (U24) GPMC0_AD15.GPIO0_30 */>;
