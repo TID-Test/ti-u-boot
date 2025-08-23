@@ -276,10 +276,3 @@
 &wkup_uart0 {
 	bootph-pre-ram;
 };
-
-&main_gpio1 {
-	    bootph-pre-ram;
-	    gpio1_10 {
-		        bootph-pre-ram;
-	    };
-};
