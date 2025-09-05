@@ -282,6 +282,16 @@
 		pinctrl-single,pins = <AM62X_IOPAD(0x19c, PIN_INPUT_PULLUP, 0) /* (B18) GPIO_1_9 */>;
 	};
 
+	//touch reset pin
+	touchrst_pins_default: touchrst-default-pins {
+		pinctrl-single,pins = <AM62X_IOPAD(0x01ac, PIN_OUTPUT, 7) /* (E19) MCASP0_AFSR.GPIO1_13 */>;
+	};
+
+	//touch interrupt pin
+	touch_irq_pins_default: touch-irq-default-pins {
+		pinctrl-single,pins = <AM62X_IOPAD(0x01b8, PIN_INPUT, 7) /* (C13) SPI0_CS1.GPIO1_16 */>;
+	};
+
 	//Interrupt for Input GPIO Expander
 	pca9555_irq_default: pca9555_irq_default {
 		pinctrl-single,pins = <AM62X_IOPAD(0x01b0, PIN_INPUT, 7) /* (A20) MCASP0_ACLKR.GPIO1_14 */>;
@@ -291,7 +301,7 @@
 	future_irq_default: future_irq_default {
 		pinctrl-single,pins = <AM62X_IOPAD(0x009c, PIN_INPUT, 7) /* (V25) GPMC0_WAIT1.GPIO0_38 */>;
 	};
-	
+
 	main_i2c0_pins_default: main-i2c0-pins-default {
 		pinctrl-single,pins = <
 		AM62X_IOPAD(0x1e0, PIN_INPUT_PULLUP, 0) /* (B16) I2C0_SCL */
