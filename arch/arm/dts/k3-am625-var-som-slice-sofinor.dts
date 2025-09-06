@@ -2,8 +2,8 @@
 /*
  * VAR-SOM-AM62
  *
- * Copyright (C) 2021-2022 Texas Instruments Incorporated - https://www.ti.com/
- * Copyright (C) 2023-2024 Variscite Ltd. - https://www.variscite.com/
+ * Copyright (C) 2021-2022 Texas Instruments Incorporated - https: //www.ti.com/
+ * Copyright (C) 2023-2024 Variscite Ltd. - https: //www.variscite.com/
  */
 
 /dts-v1/;
@@ -11,8 +11,8 @@
 #include "k3-am625-var-som.dtsi"
 
 / {
-	compatible =  "ti,am625-sk", "ti,am625";
-	model = "Variscite VAR-SOM-AM62 on Symphony-Board";
+	compatible = "ti,am625-sk", "ti,am625";
+	model = "Variscite VAR-SOM-AM62 on Slice SOFINOR Board (u-boot minimal)";
 
 	backlight_lcd: backlight-lcd {
 		compatible = "gpio-backlight";
@@ -23,7 +23,7 @@
 	};
 
 	chosen {
-		stdout-path = "serial2:115200n8";
+		stdout-path = "serial2: 115200n8";
 		bootargs = "console=ttyS2,115200n8 earlycon=ns16550a,mmio32,0x02800000";
 	};
 
@@ -55,6 +55,7 @@
 		};
 	};
 
+	//SD Power on Schematic (to turn on or off SD power)
 	vdd_mmc1: regulator-3 {
 		compatible = "regulator-fixed";
 		regulator-name = "SD_power_en";
@@ -67,18 +68,152 @@
 		gpio = <&main_gpio0 30 GPIO_ACTIVE_HIGH>;
 	};
 
+	//used to change sd voltage from 3.3V to 1.8V
 	vdd_sd_dv: gpio-regulator-4 {
 		compatible = "regulator-gpio";
 		regulator-name = "SD_voltage_sel";
 		pinctrl-names = "default";
-		pinctrl-0 = <&vdd_sd_dv_pins_default>;
+		pinctrl-0 = <&vdd_sd_dv_pins_default>;//Array of one or more GPIO pins used to select the regulator voltage/current listed in "states"
 		regulator-min-microvolt = <1800000>;
 		regulator-max-microvolt = <3300000>;
 		regulator-boot-on;
 		gpios = <&main_gpio0 56 GPIO_ACTIVE_HIGH>;
 		states = <1800000 0x0>,
-			 <3300000 0x1>;
+				 <3300000 0x1>;
+		//states: Selection of available voltages/currents provided by
+		//this regulator and matching GPIO configurations to
+		//achieve them. If there are no states in the "states"
+		//array, use a fixed regulator instead
 	};
+
+	gpio-leds {
+		compatible = "gpio-leds";
+		status = "okay";
+
+		ctrl_out_1 {
+			label = "ctrl-out-1";                 // Label for the LED
+			gpios = <&pca9555Out 0 GPIO_ACTIVE_HIGH>;// GPIO0 pin 38 (active low PNP)
+			default-state = "off";                   // Initial state
+		};
+
+		ctrl_out_2 {
+			label = "ctrl-out-2";                 // Label for the LED
+			gpios = <&pca9555Out 1 GPIO_ACTIVE_HIGH>;// GPIO0 pin 38 (active low PNP)
+			default-state = "off";                   // Initial state
+		};
+
+		ctrl_out_3 {
+			label = "ctrl-out-3";                 // Label for the LED
+			gpios = <&pca9555Out 2 GPIO_ACTIVE_HIGH>;// GPIO0 pin 38 (active low PNP)
+			default-state = "off";                   // Initial state
+		};
+
+		ctrl_out_4 {
+			label = "ctrl-out-4";                 // Label for the LED
+			gpios = <&pca9555Out 3 GPIO_ACTIVE_HIGH>;// GPIO0 pin 38 (active low PNP)
+			default-state = "off";                   // Initial state
+		};
+
+		ctrl_out_5 {
+			label = "ctrl-out-5";                 // Label for the LED
+			gpios = <&pca9555Out 4 GPIO_ACTIVE_HIGH>;// GPIO0 pin 38 (active low PNP)
+			default-state = "off";                   // Initial state
+		};
+
+		ctrl_out_6 {
+			label = "ctrl-out-6";                 // Label for the LED
+			gpios = <&pca9555Out 5 GPIO_ACTIVE_HIGH>;// GPIO0 pin 38 (active low PNP)
+			default-state = "off";                   // Initial state
+		};
+
+		ctrl_out_7 {
+			label = "ctrl-out-7";                 // Label for the LED
+			gpios = <&pca9555Out 6 GPIO_ACTIVE_HIGH>;// GPIO0 pin 38 (active low PNP)
+			default-state = "off";                   // Initial state
+		};
+
+		ctrl_out_8 {
+			label = "ctrl-out-8";                 // Label for the LED
+			gpios = <&pca9555Out 7 GPIO_ACTIVE_HIGH>;// GPIO0 pin 38 (active low PNP)
+			default-state = "off";                   // Initial state
+		};
+
+		ctrl_out_9 {
+			label = "ctrl-out-9";                 // Label for the LED
+			gpios = <&pca9555Out 8 GPIO_ACTIVE_HIGH>;// GPIO0 pin 38 (active low PNP)
+			default-state = "off";                   // Initial state
+		};
+
+		ctrl_out_10 {
+			label = "ctrl-out-10";                 // Label for the LED
+			gpios = <&pca9555Out 9 GPIO_ACTIVE_HIGH>;// GPIO0 pin 38 (active low PNP)
+			default-state = "off";                   // Initial state
+		};
+
+		ctrl_out_11 {
+			label = "ctrl-out-11";                 // Label for the LED
+			gpios = <&pca9555Out 10 GPIO_ACTIVE_HIGH>;// GPIO0 pin 38 (active low PNP)
+			default-state = "off";                   // Initial state
+		};
+
+		ctrl_out_12 {
+			label = "ctrl-out-12";                 // Label for the LED
+			gpios = <&pca9555Out 11 GPIO_ACTIVE_HIGH>;// GPIO0 pin 38 (active low PNP)
+			default-state = "off";                   // Initial state
+		};
+
+		ctrl_out_13 {
+			label = "ctrl-out-13";                 // Label for the LED
+			gpios = <&pca9555Out 12 GPIO_ACTIVE_HIGH>;// GPIO0 pin 38 (active low PNP)
+			default-state = "off";                   // Initial state
+		};
+
+		ctrl_out_14 {
+			label = "ctrl-out-14";                 // Label for the LED
+			gpios = <&pca9555Out 13 GPIO_ACTIVE_HIGH>;// GPIO0 pin 38 (active low PNP)
+			default-state = "off";                   // Initial state
+		};
+
+		dir_motor_1 {
+			label = "dir-motor-1";                 // Label for the LED
+			gpios = <&pca9555Out 14 GPIO_ACTIVE_HIGH>;// GPIO0 pin 38 (active low PNP)
+			default-state = "off";                   // Initial state
+		};
+
+		dir_motor_2 {
+			label = "dir-motor-2";                 // Label for the LED
+			gpios = <&pca9555Out 15 GPIO_ACTIVE_HIGH>;// GPIO0 pin 38 (active low PNP)
+			default-state = "off";                   // Initial state
+		};
+
+		buzzer {
+			label = "buzzer";                 // Label for the LED
+			gpios = <&pca9555In 12 GPIO_ACTIVE_HIGH>;
+			default-state = "off";                   // Initial state
+		};
+
+		onoffmotor1 {
+			label = "on-off-motor-1";                 // Label for the LED
+			gpios = <&pca9555In 13 GPIO_ACTIVE_HIGH>;
+			default-state = "off";                   // Initial state
+		};
+
+		onoffmotor2 {
+			label = "on-off-motor-2";                 // Label for the LED
+			gpios = <&pca9555In 14 GPIO_ACTIVE_HIGH>;
+			default-state = "off";                   // Initial state
+		};
+	};
+};
+
+&cpsw3g_mdio {
+	cpsw3g_phy1: ethernet-phy@5 {
+		reg = <5>;
+	};
+};
+
+&cpsw_port2 {
+	status = "disabled";
 };
 
 &dss {
@@ -117,96 +252,118 @@
 	pinctrl-names = "default";
 	pinctrl-0 = <&main_i2c2_pins_default>;
 	clock-frequency = <400000>;
+
+	/* GPIO expander */
+	pca9555Out: pca9555Out@20 {
+		compatible = "nxp,pca9555";
+		reg = <0x20>;
+		gpio-controller;
+		pinctrl-names = "default";
+		#gpio-cells = <2>;
+		status = "okay";
+	};
+	pca9555In: pca9555In@21 {
+		compatible = "nxp,pca9555";
+		reg = <0x21>;
+		gpio-controller;
+		pinctrl-names = "default";
+		pinctrl-0 = <&pca9555_irq_default>;
+		interrupt-parent = <&main_gpio1>;
+		interrupts = <15 IRQ_TYPE_EDGE_FALLING>;
+		#gpio-cells = <2>;
+		wakeup-source;
+		status = "okay";
+	};
 };
 
 &main_pmx0 {
+
 	lcd_backlight_pins_default: lcd-backlight-pins-default {
-		pinctrl-single,pins = <
-			AM62X_IOPAD(0x19c, PIN_INPUT_PULLUP, 0) /* (B18) GPIO_1_9 */
-		>;
+		pinctrl-single,pins = <AM62X_IOPAD(0x19c, PIN_INPUT_PULLUP, 0) /* (B18) GPIO_1_9 */>;
+	};
+
+	//Interrupt for Input GPIO Expander
+	pca9555_irq_default: pca9555_irq_default {
+		pinctrl-single,pins = <AM62X_IOPAD(0x01b4, PIN_INPUT, 7) /* (A13) SPI0_CS0.GPIO1_15 */>;
 	};
 
 	main_i2c0_pins_default: main-i2c0-pins-default {
 		pinctrl-single,pins = <
-			AM62X_IOPAD(0x1e0, PIN_INPUT_PULLUP, 0) /* (B16) I2C0_SCL */
-			AM62X_IOPAD(0x1e4, PIN_INPUT_PULLUP, 0) /* (A16) I2C0_SDA */
+		AM62X_IOPAD(0x1e0, PIN_INPUT_PULLUP, 0) /* (B16) I2C0_SCL */
+		AM62X_IOPAD(0x1e4, PIN_INPUT_PULLUP, 0) /* (A16) I2C0_SDA */
 		>;
 	};
 
 	main_i2c1_pins_default: main-i2c1-pins-default {
 		pinctrl-single,pins = <
-			AM62X_IOPAD(0x1e8, PIN_INPUT_PULLUP, 0) /* (B17) I2C1_SCL */
-			AM62X_IOPAD(0x1ec, PIN_INPUT_PULLUP, 0) /* (A17) I2C1_SDA */
+		AM62X_IOPAD(0x1e8, PIN_INPUT_PULLUP, 0) /* (B17) I2C1_SCL */
+		AM62X_IOPAD(0x1ec, PIN_INPUT_PULLUP, 0) /* (A17) I2C1_SDA */
 		>;
 	};
 
 	main_i2c2_pins_default: main-i2c2-pins-default {
 		pinctrl-single,pins = <
-			AM62X_IOPAD(0x0b0, PIN_INPUT_PULLUP, 1) /* (K22) GPMC0_CSn2.I2C2_SCL */
-			AM62X_IOPAD(0x0b4, PIN_INPUT_PULLUP, 1) /* (K24) GPMC0_CSn3.I2C2_SDA */
+		AM62X_IOPAD(0x0b0, PIN_INPUT_PULLUP, 1) /* (K22) GPMC0_CSn2.I2C2_SCL */
+		AM62X_IOPAD(0x0b4, PIN_INPUT_PULLUP, 1) /* (K24) GPMC0_CSn3.I2C2_SDA */
 		>;
 	};
 
 	main_mmc1_pins_default: main-mmc1-pins-default {
 		pinctrl-single,pins = <
-			AM62X_IOPAD(0x23c, PIN_INPUT, 0) /* (A21) MMC1_CMD */
-			AM62X_IOPAD(0x234, PIN_INPUT, 0) /* (B22) MMC1_CLK */
-			AM62X_IOPAD(0x230, PIN_INPUT, 0) /* (A22) MMC1_DAT0 */
-			AM62X_IOPAD(0x22c, PIN_INPUT, 0) /* (B21) MMC1_DAT1 */
-			AM62X_IOPAD(0x228, PIN_INPUT, 0) /* (C21) MMC1_DAT2 */
-			AM62X_IOPAD(0x224, PIN_INPUT, 0) /* (D22) MMC1_DAT3 */
-			AM62X_IOPAD(0x240, PIN_INPUT, 0) /* (D17) MMC1_SDCD */
+		AM62X_IOPAD(0x23c, PIN_INPUT, 0) /* (A21) MMC1_CMD */
+		AM62X_IOPAD(0x234, PIN_INPUT, 0) /* (B22) MMC1_CLK */
+		AM62X_IOPAD(0x230, PIN_INPUT, 0) /* (A22) MMC1_DAT0 */
+		AM62X_IOPAD(0x22c, PIN_INPUT, 0) /* (B21) MMC1_DAT1 */
+		AM62X_IOPAD(0x228, PIN_INPUT, 0) /* (C21) MMC1_DAT2 */
+		AM62X_IOPAD(0x224, PIN_INPUT, 0) /* (D22) MMC1_DAT3 */
+		AM62X_IOPAD(0x240, PIN_INPUT, 0) /* (D17) MMC1_SDCD */
 		>;
 	};
 
 	main_oldi0_pins_default: main-oldi0-pins-default {
 		pinctrl-single,pins = <
-			AM62X_IOPAD(0x0260, PIN_INPUT, 0) /* (AA5) OLDI0_A0N */
-			AM62X_IOPAD(0x025c, PIN_OUTPUT, 0) /* (Y6) OLDI0_A0P */
-			AM62X_IOPAD(0x0268, PIN_OUTPUT, 0) /* (AD3) OLDI0_A1N */
-			AM62X_IOPAD(0x0264, PIN_OUTPUT, 0) /* (AB4) OLDI0_A1P */
-			AM62X_IOPAD(0x0270, PIN_OUTPUT, 0) /* (Y8) OLDI0_A2N */
-			AM62X_IOPAD(0x026c, PIN_OUTPUT, 0) /* (AA8) OLDI0_A2P */
-			AM62X_IOPAD(0x0278, PIN_OUTPUT, 0) /* (AB6) OLDI0_A3N */
-			AM62X_IOPAD(0x0274, PIN_OUTPUT, 0) /* (AA7) OLDI0_A3P */
-			AM62X_IOPAD(0x0280, PIN_OUTPUT, 0) /* (AC6) OLDI0_A4N */
-			AM62X_IOPAD(0x027c, PIN_OUTPUT, 0) /* (AC5) OLDI0_A4P */
-			AM62X_IOPAD(0x0288, PIN_OUTPUT, 0) /* (AE5) OLDI0_A5N */
-			AM62X_IOPAD(0x0284, PIN_OUTPUT, 0) /* (AD6) OLDI0_A5P */
-			AM62X_IOPAD(0x0290, PIN_OUTPUT, 0) /* (AE6) OLDI0_A6N */
-			AM62X_IOPAD(0x028c, PIN_OUTPUT, 0) /* (AD7) OLDI0_A6P */
-			AM62X_IOPAD(0x0298, PIN_OUTPUT, 0) /* (AD8) OLDI0_A7N */
-			AM62X_IOPAD(0x0294, PIN_OUTPUT, 0) /* (AE7) OLDI0_A7P */
-			AM62X_IOPAD(0x02a0, PIN_OUTPUT, 0) /* (AD4) OLDI0_CLK0N */
-			AM62X_IOPAD(0x029c, PIN_OUTPUT, 0) /* (AE3) OLDI0_CLK0P */
-			AM62X_IOPAD(0x02a8, PIN_OUTPUT, 0) /* (AE4) OLDI0_CLK1N */
-			AM62X_IOPAD(0x02a4, PIN_OUTPUT, 0) /* (AD5) OLDI0_CLK1P */
+		AM62X_IOPAD(0x0260, PIN_INPUT, 0) /* (AA5) OLDI0_A0N */
+		AM62X_IOPAD(0x025c, PIN_OUTPUT, 0) /* (Y6) OLDI0_A0P */
+		AM62X_IOPAD(0x0268, PIN_OUTPUT, 0) /* (AD3) OLDI0_A1N */
+		AM62X_IOPAD(0x0264, PIN_OUTPUT, 0) /* (AB4) OLDI0_A1P */
+		AM62X_IOPAD(0x0270, PIN_OUTPUT, 0) /* (Y8) OLDI0_A2N */
+		AM62X_IOPAD(0x026c, PIN_OUTPUT, 0) /* (AA8) OLDI0_A2P */
+		AM62X_IOPAD(0x0278, PIN_OUTPUT, 0) /* (AB6) OLDI0_A3N */
+		AM62X_IOPAD(0x0274, PIN_OUTPUT, 0) /* (AA7) OLDI0_A3P */
+		AM62X_IOPAD(0x0280, PIN_OUTPUT, 0) /* (AC6) OLDI0_A4N */
+		AM62X_IOPAD(0x027c, PIN_OUTPUT, 0) /* (AC5) OLDI0_A4P */
+		AM62X_IOPAD(0x0288, PIN_OUTPUT, 0) /* (AE5) OLDI0_A5N */
+		AM62X_IOPAD(0x0284, PIN_OUTPUT, 0) /* (AD6) OLDI0_A5P */
+		AM62X_IOPAD(0x0290, PIN_OUTPUT, 0) /* (AE6) OLDI0_A6N */
+		AM62X_IOPAD(0x028c, PIN_OUTPUT, 0) /* (AD7) OLDI0_A6P */
+		AM62X_IOPAD(0x0298, PIN_OUTPUT, 0) /* (AD8) OLDI0_A7N */
+		AM62X_IOPAD(0x0294, PIN_OUTPUT, 0) /* (AE7) OLDI0_A7P */
+		AM62X_IOPAD(0x02a0, PIN_OUTPUT, 0) /* (AD4) OLDI0_CLK0N */
+		AM62X_IOPAD(0x029c, PIN_OUTPUT, 0) /* (AE3) OLDI0_CLK0P */
+		AM62X_IOPAD(0x02a8, PIN_OUTPUT, 0) /* (AE4) OLDI0_CLK1N */
+		AM62X_IOPAD(0x02a4, PIN_OUTPUT, 0) /* (AD5) OLDI0_CLK1P */
 		>;
 	};
 
 	main_uart0_pins_default: main-uart0-pins-default {
 		pinctrl-single,pins = <
-			AM62X_IOPAD(0x1c8, PIN_INPUT, 0) /* (D14) UART0_RXD */
-			AM62X_IOPAD(0x1cc, PIN_OUTPUT, 0) /* (E14) UART0_TXD */
+		AM62X_IOPAD(0x1c8, PIN_INPUT, 0) /* (D14) UART0_RXD */
+		AM62X_IOPAD(0x1cc, PIN_OUTPUT, 0) /* (E14) UART0_TXD */
 		>;
 	};
 
 	// main_usb1_pins_default: main-usb1-pins-default {
 	// 	pinctrl-single,pins = <
-	// 		AM62X_IOPAD(0x0258, PIN_OUTPUT, 0) /* (F18) USB1_DRVVBUS */
+	// 	AM62X_IOPAD(0x0258, PIN_OUTPUT, 0) /* (F18) USB1_DRVVBUS */
 	// 	>;
 	// };
 
 	vdd_mmc1_pins_default: vdd-mmc1-pins-default {
-		pinctrl-single,pins = <
-			AM62X_IOPAD(0x0078, PIN_OUTPUT, 7) /* (U24) GPMC0_AD15.GPIO0_30 */
-		>;
+		pinctrl-single,pins = <AM62X_IOPAD(0x0078, PIN_OUTPUT, 7) /* (U24) GPMC0_AD15.GPIO0_30 */>;
 	};
 
 	vdd_sd_dv_pins_default: vdd-sd-dv-pins-default {
-		pinctrl-single,pins = <
-			AM62X_IOPAD(0x00e4, PIN_OUTPUT, 7) /* (AA23) VOUT0_DATA11.GPIO0_56 */
-		>;
+		pinctrl-single,pins = <AM62X_IOPAD(0x00e4, PIN_OUTPUT, 7) /* (AA23) VOUT0_DATA11.GPIO0_56 */>;
 	};
 };
 
@@ -232,32 +389,31 @@
 /* SD card */
 &sdhci1 {
 	status = "okay";
-	vmmc-supply = <&vdd_mmc1>;
-	vqmmc-supply = <&vdd_sd_dv>;
+	vmmc-supply = <&vdd_mmc1>;//phandle to the regulator device tree node, mentioned as the VCC/VDD supply in the eMMC/SD specs.
+	vqmmc-supply = <&vdd_sd_dv>;//phandle to the regulator device tree node, mentioned as the VCCQ/VDD_IO supply in the eMMC/SD specs
 	pinctrl-names = "default";
 	pinctrl-0 = <&main_mmc1_pins_default>;
 	disable-wp;
 };
 
 &usb0 {
-	dr_mode = "peripheral";
+	    dr_mode = "peripheral";
 };
 
-&usb1 {
-	// dr_mode = "host";
-	// pinctrl-names = "default";
-	// pinctrl-0 = <&main_usb1_pins_default>;
-	status = "disabled";
-};
+// &usb1 {
+	//     dr_mode = "host";
+	//     pinctrl-names = "default";
+	//     pinctrl-0 = <&main_usb1_pins_default>;
+// };
 
 &usbss0 {
-	status = "okay";
-	ti,vbus-divider;
+	    status = "okay";
+	    ti,vbus-divider;
 };
 
-&usbss1 {
-	status = "disabled";
-};
+// &usbss1 {
+	//     status = "okay";
+// };
 
 &wkup_i2c0 {
 	status = "disabled";
