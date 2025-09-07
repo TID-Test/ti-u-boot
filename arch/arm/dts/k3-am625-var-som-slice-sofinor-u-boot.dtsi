@@ -65,9 +65,9 @@
 	    bootph-pre-ram;
 };
 
-// &cpsw_port2 {
-	//     bootph-pre-ram;
-// };
+&cpsw_port2 {
+	    bootph-pre-ram;
+};
 
 &dmsc {
 	bootph-pre-ram;
