@@ -206,11 +206,15 @@
 	};
 };
 
-&cpsw3g_mdio {
-	cpsw3g_phy1: ethernet-phy@5 {
-		reg = <5>;
-	};
+&main_rgmii2_pins_default{
+	pinctrl-single,pins = <>;
 };
+
+// &cpsw3g_mdio {
+// 	cpsw3g_phy1: ethernet-phy@5 {
+// 		reg = <5>;
+// 	};
+// };
 
 &cpsw_port2 {
 	status = "disabled";
@@ -233,12 +237,12 @@
 	};
 };
 
-// &main_i2c0 {
-// 	status = "okay";
-// 	pinctrl-names = "default";
-// 	pinctrl-0 = <&main_i2c0_pins_default>;
-// 	clock-frequency = <400000>;
-// };
+&main_i2c0 {
+	status = "okay";
+	pinctrl-names = "default";
+	pinctrl-0 = <&main_i2c0_pins_default>;
+	clock-frequency = <400000>;
+};
 
 &main_i2c1 {
 	status = "okay";
@@ -287,12 +291,12 @@
 		pinctrl-single,pins = <AM62X_IOPAD(0x01b4, PIN_INPUT, 7) /* (A13) SPI0_CS0.GPIO1_15 */>;
 	};
 
-	// main_i2c0_pins_default: main-i2c0-pins-default {
-	// 	pinctrl-single,pins = <
-	// 	 AM62X_IOPAD(0x1e0, PIN_INPUT_PULLUP, 0) /* (B16) I2C0_SCL */
-	// 	 AM62X_IOPAD(0x1e4, PIN_INPUT_PULLUP, 0) /* (A16) I2C0_SDA */
-	// 	>;
-	// };
+	main_i2c0_pins_default: main-i2c0-pins-default {
+		pinctrl-single,pins = <
+		 AM62X_IOPAD(0x1e0, PIN_INPUT_PULLUP, 0) /* (B16) I2C0_SCL */
+		 AM62X_IOPAD(0x1e4, PIN_INPUT_PULLUP, 0) /* (A16) I2C0_SDA */
+		>;
+	};
 
 	main_i2c1_pins_default: main-i2c1-pins-default {
 		pinctrl-single,pins = <
